@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link, routes } from '@redwoodjs/router'
+import { useAuth } from "@redwoodjs/auth";
 
 const ApplicationLayout = ({ children }) => {
+  const { logIn, logOut, isAuthenticated, currentUser } = useAuth();
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
@@ -70,6 +72,12 @@ const ApplicationLayout = ({ children }) => {
                   </svg>
               Shop
             </Link>
+                <a className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150" href="#" onClick={isAuthenticated ? logOut : logIn}>
+                  <svg className="mr-4 h-6 w-6 text-indigo-400 group-hover:text-indigo-300 group-focus:text-indigo-300 transition ease-in-out duration-150" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                  </svg>
+                  {isAuthenticated ? "Log Out" : "Log In"}
+                </a>
               </nav>
             </div>
           </div>
@@ -104,6 +112,14 @@ const ApplicationLayout = ({ children }) => {
                   </svg>
               Shop
             </Link>
+                <a className="mt-1 group flex items-center px-2 py-2 text-sm leading-5 font-medium text-indigo-300 rounded-md hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150" href="#" onClick={isAuthenticated ? logOut : logIn}>
+                  <svg className="mr-4 h-6 w-6 text-indigo-400 group-hover:text-indigo-300 group-focus:text-indigo-300 transition ease-in-out duration-150" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                  </svg>
+                  {isAuthenticated ? "Log Out" : "Log In"}
+                </a>
+
+                {isAuthenticated && <li>{currentUser.email}</li>}
 
               </nav>
             </div>
