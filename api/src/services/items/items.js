@@ -11,6 +11,16 @@ export const item = ({ id }) => {
   })
 }
 
+export const itemsByName = ({ name }) => {
+  return db.item.findMany({
+    where: {
+      name: {
+        contains: name
+      }
+    },
+  })
+}
+
 export const createItem = ({ input }) => {
   requireAuth()
   return db.item.create({

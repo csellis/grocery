@@ -11,6 +11,7 @@ export const schema = gql`
 
   type Query {
     items: [Item!]!
+    itemsByName(name: String!): [Item!]!
     item(id: Int!): Item!
   }
 
