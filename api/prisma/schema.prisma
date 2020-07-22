@@ -23,4 +23,12 @@ model Item {
   published Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  users     User[]   @relation(references: [id])
+}
+
+model User {
+  id    String  @id @default(uuid())
+  email String  @unique
+  name  String?
+  items Item[]  @relation(references: [id])
 }

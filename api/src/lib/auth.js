@@ -6,10 +6,10 @@
 //   }
 
 import { AuthenticationError } from '@redwoodjs/api'
-
-export const getCurrentUser = async (decoded, { token, type }) => {
-  return decoded
-}
+import { db } from './db'
+// export const getCurrentUser = async (decoded, { token, type }) => {
+//   return decoded
+// }
 
 // Use this function in your services to check that a user is logged in, and
 // optionally raise an error if they're not.
@@ -18,4 +18,18 @@ export const requireAuth = () => {
   if (!context.currentUser) {
     throw new AuthenticationError("You don't have permission to do that.")
   }
+}
+
+export const getCurrentUser = async ({ name, email }) => {
+  const user =
+    (await db.user.findOne({
+      where: { email },
+    })) || (await createUser(name, email))
+  return user
+}
+
+const createUser = (name, email) => {
+  return db.user.create({
+    data: { name, email }
+  })
 }
