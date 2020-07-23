@@ -7,7 +7,15 @@ export const schema = gql`
     published: Boolean!
     createdAt: DateTime!
     updatedAt: DateTime!
-    users: [User]!
+    users: [ItemsOnUser]!
+  }
+
+  type ItemsOnUser {
+    item: Item
+    itemId: Int
+    user: User
+    userId: String
+    picked: Boolean
   }
 
   type Query {
