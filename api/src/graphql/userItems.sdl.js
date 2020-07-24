@@ -17,10 +17,7 @@ export const schema = gql`
   }
 
   input CreateUserItemInput {
-    userId: String!
-    itemName: String!
-    itemId: Int!
-    picked: Boolean!
+    id: Int
   }
 
   input UpdateUserItemInput {
@@ -28,5 +25,9 @@ export const schema = gql`
     itemName: String
     itemId: Int
     picked: Boolean
+  }
+
+  type Mutation {
+    createUserItem(input: CreateUserItemInput): ID
   }
 `
