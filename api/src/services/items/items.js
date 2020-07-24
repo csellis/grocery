@@ -22,19 +22,23 @@ export const itemsByName = ({ name }) => {
 }
 
 export const createUserItem = async (props) => {
+  console.log(props)
   const currentUser = await getUserServer();
+  const item = await db.item.findOne({ where: { id: props.input.id } });
   const userId = currentUser && currentUser.id;
-  const itemId = props.input.id;
-  const userItem = await db.item.update({
-    where: { id: itemId },
+  const userItem = await db.userItem.create({
     data: {
-      users: {
+      itemName: item.name,
+      itemId: item.id,
+      picked: false,
+      user: {
         connect: { id: userId }
       }
     }
-  })
+  });
+
   console.log(userItem)
-  return props.id;
+  return userItem.id;
 }
 
 export const createItem = ({ input }) => {

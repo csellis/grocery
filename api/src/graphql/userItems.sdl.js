@@ -16,12 +16,12 @@ export const schema = gql`
     userItems: [UserItem!]!
   }
 
-  input CreateUserItemInput {
-    userId: String!
-    itemName: String!
-    itemId: Int!
-    picked: Boolean!
-  }
+  # input CreateUserItemInput {
+  #   userId: String!
+  #   itemName: String!
+  #   itemId: Int!
+  #   picked: Boolean!
+  # }
 
   input UpdateUserItemInput {
     userId: String
