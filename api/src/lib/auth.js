@@ -20,6 +20,10 @@ export const requireAuth = () => {
   }
 }
 
+export const getUserServer = async () => {
+  return context.currentUser;
+}
+
 export const getCurrentUser = async ({ name, email }) => {
   const user =
     (await db.user.findOne({

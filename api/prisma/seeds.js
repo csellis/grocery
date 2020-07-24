@@ -15,8 +15,23 @@ async function main() {
   //   if (!existing.length) {
   //     await db.user.create({ data: { name: 'Admin', email: 'admin@email.com' }})
   //   }
+  const items = ["IPAs", "Beer", "Milk"];
 
-  console.info('No data to seed. See api/prisma/seeds.js for info.')
+  const addItem = async (name) => {
+    const exists = await db.item.findMany({ where: { name } });
+    if (!exists.length) {
+      const created = await db.item.create({
+        data: {
+          name,
+          published: true
+        }
+      });
+    }
+  }
+
+  items.map(item => addItem(item));
+  console.log(`Created ${items.length} items.`)
+  // console.info('No data to seed. See api/prisma/seeds.js for info.')
 }
 
 main()

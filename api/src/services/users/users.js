@@ -1,8 +1,11 @@
 import { db } from 'src/lib/db'
 
 export const users = () => {
-  return db.user.findMany()
+  return db.user.findMany({
+
+  })
 }
+
 
 export const User = {
   items: (_obj, { root }) =>

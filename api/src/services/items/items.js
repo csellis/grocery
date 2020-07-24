@@ -1,5 +1,5 @@
 import { db } from 'src/lib/db'
-import { requireAuth } from "src/lib/auth";
+import { requireAuth, getUserServer } from "src/lib/auth";
 
 export const items = () => {
   return db.item.findMany()
@@ -19,6 +19,22 @@ export const itemsByName = ({ name }) => {
       }
     },
   })
+}
+
+export const createUserItem = async (props) => {
+  const currentUser = await getUserServer();
+  const userId = currentUser && currentUser.id;
+  const itemId = props.input.id;
+  const userItem = await db.item.update({
+    where: { id: itemId },
+    data: {
+      users: {
+        connect: { id: userId }
+      }
+    }
+  })
+  console.log(userItem)
+  return props.id;
 }
 
 export const createItem = ({ input }) => {
