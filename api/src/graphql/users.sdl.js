@@ -5,7 +5,7 @@ export const schema = gql`
     id: String!
     email: String!
     name: String
-    items: [Item]!
+    items: [UserItem]!
   }
 
   type Query {
