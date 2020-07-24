@@ -1,8 +1,15 @@
 import { db } from 'src/lib/db'
 import { getUserServer } from 'src/lib/auth'
 
-export const userItems = () => {
-  return db.userItem.findMany()
+export const userItems = async () => {
+  const currentUser = await getUserServer();
+
+  if (currentUser) {
+    return db.userItem.findMany({
+      where: { userId: currentUser.id }
+    })
+  }
+  return [];
 }
 
 export const createUserItem = async props => {

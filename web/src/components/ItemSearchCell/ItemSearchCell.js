@@ -23,7 +23,9 @@ export const Failure = ({ error }) => <div>Error: {error.message}</div>
 
 export const Success = ({ itemsByName }) => {
 
-  const [create] = useMutation(SAVE_USER_ITEM)
+  const [create] = useMutation(SAVE_USER_ITEM, {
+    refetchQueries: ["UserItemsQuery"]
+  })
 
   const itemSelect = (e, item) => {
     e.preventDefault();
