@@ -1,4 +1,7 @@
+import { useHotkeys } from "react-hotkeys-hook";
 import { useMutation } from "@redwoodjs/web";
+import { useState } from "react";
+
 
 export const QUERY = gql`
   query ItemSearchQuery($name: String!) {
@@ -22,6 +25,8 @@ export const Empty = () => <div>Empty</div>
 export const Failure = ({ error }) => <div>Error: {error.message}</div>
 
 export const Success = ({ itemsByName }) => {
+  const [selectedUserItem, setSelectedUserItem] = useState(0)
+
 
   const [create] = useMutation(SAVE_USER_ITEM, {
     refetchQueries: ["UserItemsQuery"]
@@ -33,10 +38,39 @@ export const Success = ({ itemsByName }) => {
     // console.log(item)
   }
 
+
+  useHotkeys('*', (event, handler) => {
+    // console.log(event)
+    switch (event.key) {
+      case "ArrowDown":
+        setSelectedUserItem(selectedUserItem => selectedUserItem + 1)
+        break;
+      case "ArrowUp":
+        setSelectedUserItem(selectedUserItem => selectedUserItem - 1)
+        break;
+      case "Tab":
+        event.preventDefault() // may be contentious
+        setSelectedUserItem(selectedUserItem => selectedUserItem + 1)
+        break;
+      default:
+        console.log(event.key)
+        break;
+    }
+  }, {
+    filter: () => true
+  });
+
   return (
     <div className="absolute w-3/4 mt-16 ml-8 py-2 bg-white shadow-xl rounded-lg">
-      {itemsByName.map(item => {
-        return <a href="#" onClick={(e) => itemSelect(e, item)} className="block px-4 py-2 hover:bg-indigo-700 hover:text-white" key={item.id}>{item.name}</a>
+      <h1>{selectedUserItem}</h1>
+      {itemsByName.map((item, i) => {
+        return <a
+          href="#"
+          onClick={(e) => itemSelect(e, item)}
+          className={`${selectedUserItem === i ? 'bg-indigo-500' : ''} block px-4 py-2 hover:bg-indigo-700 hover:text-white`}
+          key={item.id}>
+          {item.name}
+        </a>
       })}
     </div>
   )
