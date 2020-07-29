@@ -11,7 +11,7 @@ const SearchBar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`The query is ${query}`)
+    // console.log(`The query is ${query}`)
   }
 
   return (
@@ -27,7 +27,7 @@ const SearchBar = () => {
           <input value={query} onChange={handleChange} id="search_field" className="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm" placeholder="Search" type="search" />
         </div>
       </form>
-      {query.length > 0 && <ItemSearchCell name={query} />}
+      {query.length > 0 && <ItemSearchCell name={query} setQuery={setQuery} />}
     </div>
   )
 }

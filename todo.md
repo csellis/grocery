@@ -1,19 +1,11 @@
 # Todo
 
-- [x] Application shell
-- [x] Create some pages: Plan, Shop
-  - [x] Connect Database
-  - [x] Use the Redwood Interface create items
-  - [x] Work on Items View
-- [ ] UsersItems(GroceryList)
-  - [ ] userid
-  - [ ] item
-  - [ ] picked (false)
-  - [ ] category
-  - [ ] Going into Plan
-  - [ ] Going into Shop
 - [ ] Setting up search
-  - [ ] Search for canonical items
-  - [ ] Add those items to grocery list
+  - [x] Search for canonical items
+  - [x] Add those items to grocery list on click
+  - [x] Add those items to grocery list on enter
+    - [x] Create enter
+    - [x] Clear search
   - [ ] If not a canonical item, create it then add it to grocery list
+    - [ ] Create link in empty
 - [ ] Private routes not working
