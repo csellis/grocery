@@ -50,6 +50,7 @@ export const Success = ({ itemsByName, setQuery, name }) => {
         }
       }
     })
+    setQuery("")
   }
 
   const itemSelect = (e, item) => {
