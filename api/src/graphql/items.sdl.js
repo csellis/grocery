@@ -18,7 +18,7 @@ export const schema = gql`
 
   input CreateItemInput {
     name: String!
-    published: Boolean!
+    published: Boolean
   }
 
   input UpdateItemInput {
@@ -28,6 +28,7 @@ export const schema = gql`
 
   type Mutation {
     createItem(input: CreateItemInput!): Item!
+    createItemAndUserItem(input: CreateItemInput): Item!
     updateItem(id: Int!, input: UpdateItemInput!): Item!
     deleteItem(id: Int!): Item!
   }

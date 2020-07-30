@@ -20,26 +20,13 @@ const SAVE_USER_ITEM = gql`
 
 const CREATE_NEW_ITEM = gql`
   mutation CreateNewItem($input: CreateItemInput) {
-    createItem(input: $input)
+    createItemAndUserItem(input: $input) {
+      id
+    }
   }
 `
 
 export const Loading = () => <div>Loading...</div>
-
-// export const Empty = () => {
-
-//   return (
-//     <div className="absolute w-3/4 mt-16 ml-8 py-2 bg-white shadow-xl rounded-lg">
-//       <a
-//         href="#"
-//         onClick={(e) => itemSelect(e, item)}
-//         className={`block px-4 py-2 hover:bg-indigo-700 hover:text-white`}
-//       >
-//         Empty
-//       </a>
-//     </div>
-//   )
-// }
 
 export const Failure = ({ error }) => <div>Error: {error.message}</div>
 
@@ -50,7 +37,20 @@ export const Success = ({ itemsByName, setQuery, name }) => {
     refetchQueries: ["UserItemsQuery"]
   })
 
-  const [createItem] = useMutation(CREATE_NEW_ITEM);
+  const [createItemAndUserItem] = useMutation(CREATE_NEW_ITEM, {
+    refetchQueries: ["UserItemsQuery"]
+  });
+
+  const createNewItem = (e, newItemName) => {
+    e.preventDefault();
+    createItemAndUserItem({
+      variables: {
+        input: {
+          name: newItemName
+        }
+      }
+    })
+  }
 
   const itemSelect = (e, item) => {
     e.preventDefault();
@@ -101,17 +101,7 @@ export const Success = ({ itemsByName, setQuery, name }) => {
     return name.split(" ").map(word => capitalize(word)).join(" ")
   }
 
-  const createNewItem = (e, newItemName) => {
-    e.preventDefault();
-    createItem({
-      variables: {
-        input: {
-          name: newItemName,
-          published: true
-        }
-      }
-    })
-  }
+
 
   return (
     <div className="absolute w-3/4 mt-16 ml-8 py-2 bg-white shadow-xl rounded-lg">
@@ -133,3 +123,18 @@ export const Success = ({ itemsByName, setQuery, name }) => {
     </div>
   )
 }
+
+// export const Empty = () => {
+
+//   return (
+//     <div className="absolute w-3/4 mt-16 ml-8 py-2 bg-white shadow-xl rounded-lg">
+//       <a
+//         href="#"
+//         onClick={(e) => itemSelect(e, item)}
+//         className={`block px-4 py-2 hover:bg-indigo-700 hover:text-white`}
+//       >
+//         Empty
+//       </a>
+//     </div>
+//   )
+// }
