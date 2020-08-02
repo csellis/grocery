@@ -20,6 +20,10 @@ export const schema = gql`
     id: Int
   }
 
+  input DeleteUserItemInput {
+    userItemId: Int
+  }
+
   input UpdateUserItemInput {
     userId: String
     itemName: String
@@ -29,5 +33,6 @@ export const schema = gql`
 
   type Mutation {
     createUserItem(input: CreateUserItemInput): ID
+    deleteUserItem(input: DeleteUserItemInput!): ID
   }
 `

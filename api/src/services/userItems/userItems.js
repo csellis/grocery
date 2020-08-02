@@ -1,5 +1,5 @@
 import { db } from 'src/lib/db'
-import { getUserServer } from 'src/lib/auth'
+import { getUserServer, requireAuth } from 'src/lib/auth'
 
 export const userItems = async () => {
   const currentUser = await getUserServer();
@@ -13,6 +13,30 @@ export const userItems = async () => {
     })
   }
   return [];
+}
+
+export const deleteUserItem = async props => {
+  const { userItemId } = props.input
+
+  // require a user
+  requireAuth();
+  // fetch userItem
+  const userItem = await db.userItem.findOne({
+    where: { id: userItemId }
+  })
+  // fetch user
+  const currentUser = await getUserServer()
+
+  // console.log(userItem)
+  // require user is deleting their own item
+  if (userItem.userId === currentUser.id) {
+    // delete useritem
+    const deletedItem = await db.userItem.delete({
+      where: { id: userItemId }
+    })
+
+    return deletedItem.id;
+  }
 }
 
 export const createUserItem = async props => {

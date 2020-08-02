@@ -1,9 +1,17 @@
+import { useMutation } from "@redwoodjs/web";
+
 export const QUERY = gql`
   query UserItemsQuery {
     userItems {
       id
       itemName
     }
+  }
+`
+
+const DELETE_USER_ITEM = gql`
+  mutation DeleteUserItem($input: DeleteUserItemInput!) {
+    deleteUserItem(input: $input)
   }
 `
 
@@ -14,6 +22,22 @@ export const Empty = () => <div>Empty</div>
 export const Failure = ({ error }) => <div>Error: {error.message}</div>
 
 export const Success = ({ userItems }) => {
+
+  const [deleteUserItem] = useMutation(DELETE_USER_ITEM, {
+    refetchQueries: ["UserItemsQuery"]
+  })
+
+  const handleCancelClick = (e, userItemId) => {
+    e.preventDefault();
+    // console.log(userItemId)
+    deleteUserItem({
+      variables: {
+        input: {
+          userItemId
+        }
+      }
+    })
+  }
   return (
     <div className="flex flex-col">
       <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -23,15 +47,18 @@ export const Success = ({ userItems }) => {
               <tr>
                 <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                   Grocery List
-            </th>
+                </th>
               </tr>
             </thead>
             <tbody>
               {userItems.map(userItem => {
                 return (
                   <tr className="bg-white" key={userItem.id}>
-                    <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                    <td className="flex justify-between px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                       {userItem.itemName}
+                      <a href="#" onClick={(e) => handleCancelClick(e, userItem.id)}>
+                        <svg fill="none" className="h-8 w-8 text-gray-500 hover:text-gray-600 cursor-pointer" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+                      </a>
                     </td>
                   </tr>
                 )
