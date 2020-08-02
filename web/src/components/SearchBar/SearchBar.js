@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ItemSearchCell from 'src/components/ItemSearchCell';
+import { useHotkeys } from "react-hotkeys-hook";
 
 
 const SearchBar = () => {
@@ -13,6 +14,14 @@ const SearchBar = () => {
     e.preventDefault();
     // console.log(`The query is ${query}`)
   }
+
+  useHotkeys('/', (event, handler) => {
+    event.preventDefault();
+    document.getElementById("search_field").focus();
+  }, {
+    filter: () => true
+  });
+
 
   return (
     <div className="w-full flex">
