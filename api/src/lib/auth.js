@@ -32,8 +32,8 @@ export const getCurrentUser = async ({ name, email }) => {
   return user
 }
 
-const createUser = (name, email) => {
-  return db.user.create({
+export const createUser = async (name, email) => {
+  return await db.user.create({
     data: { name, email }
   })
 }
