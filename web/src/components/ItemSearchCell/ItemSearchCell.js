@@ -63,37 +63,35 @@ export const Success = ({ itemsByName, setQuery, name }) => {
 
   useHotkeys('*', (event, handler) => {
     // console.log(event)
-    switch (event.key) {
-      case "ArrowDown":
-        const max = itemsByName.length - 1;
-        setSelectedUserItem(selectedUserItem => {
-          return selectedUserItem < max ? selectedUserItem + 1 : max;
-        })
-        break;
-      case "ArrowUp":
-        setSelectedUserItem(selectedUserItem => {
-          return selectedUserItem > 0 ? selectedUserItem - 1 : 0;
-        })
-        break;
-      case "Enter":
-        if (itemsByName.length !== 0) {
-          console.log('Adding existing item')
-          const item = itemsByName[selectedUserItem];
-          create({ variables: { input: { id: item.id } } })
-          setQuery("")
-        } else {
-          console.log('Adding new item')
-          createNewItem(event);
-          setQuery("")
-        }
-        break;
-      case "Tab":
-        event.preventDefault() // may be contentious
-        setSelectedUserItem(selectedUserItem => selectedUserItem + 1)
-        break;
-      default:
-        // console.log(event.key)
-        break;
+    const { key, ctrlKey } = event;
+
+    if (key === "Enter" && ctrlKey) {
+      // Adding new item while current items shown
+      // console.log('Adding new item while current items shown')
+      createNewItem(event);
+      setQuery("")
+    } else if (key === "ArrowDown") {
+      const max = itemsByName.length - 1;
+      setSelectedUserItem(selectedUserItem => {
+        return selectedUserItem < max ? selectedUserItem + 1 : max;
+      })
+    } else if (key === "ArrowUp") {
+      setSelectedUserItem(selectedUserItem => {
+        return selectedUserItem > 0 ? selectedUserItem - 1 : 0;
+      })
+    } else if (key === "Enter") {
+      if (itemsByName.length !== 0) {
+        // console.log('Adding existing item')
+        const item = itemsByName[selectedUserItem];
+        create({ variables: { input: { id: item.id } } })
+        setQuery("")
+      } else {
+        // console.log('Adding new item')
+        createNewItem(event);
+        setQuery("")
+      }
+    } else {
+      // console.log(key);
     }
   }, {
     filter: () => true
@@ -113,21 +111,23 @@ export const Success = ({ itemsByName, setQuery, name }) => {
   return (
     <div className="absolute w-3/4 mt-16 ml-8 py-2 bg-white shadow-xl rounded-lg">
       {
-        itemsByName.length > 0 ?
-          itemsByName.map((item, i) => {
-            return <a
-              href="#"
-              onClick={(e) => itemSelect(e, item)}
-              className={`${selectedUserItem === i ? 'bg-indigo-700' : ''} block px-4 py-2 hover:bg-indigo-700 hover:text-white`}
-              key={item.id}>
-              {item.name}
-            </a>
-          }) :
-          <a onClick={(e) => createNewItem(e)} className={`block px-4 py-2 hover:bg-indigo-700 hover:text-white`}>
-            Add <span className="font-bold">{upperCaseQuery()}</span>
+        itemsByName.map((item, i) => {
+          return <a
+            href="#"
+            onClick={(e) => itemSelect(e, item)}
+            className={`${selectedUserItem === i ? 'bg-indigo-700 text-white' : ''} block px-4 py-2 hover:bg-indigo-700 hover:text-white`}
+            key={item.id}>
+            {item.name}
           </a>
+        })
       }
-    </div>
+      <a onClick={(e) => createNewItem(e)} className={`px-4 py-2 hover:bg-indigo-700 hover:text-white border-t border-gray-300 flex justify-between`}>
+        <span>
+          Add <span className="font-bold">{upperCaseQuery()}</span>
+        </span>
+        <span className="text-gray-400">Ctrl + Enter</span>
+      </a>
+    </div >
   )
 }
 
