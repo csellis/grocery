@@ -26,7 +26,7 @@ const CREATE_NEW_ITEM = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+// export const Loading = () => <div>Loading...</div>
 
 export const Failure = ({ error }) => <div>Error: {error.message}</div>
 
@@ -41,8 +41,9 @@ export const Success = ({ itemsByName, setQuery, name }) => {
     refetchQueries: ["UserItemsQuery"]
   });
 
-  const createNewItem = (e, newItemName) => {
+  const createNewItem = (e) => {
     e.preventDefault();
+    const newItemName = upperCaseQuery();
     createItemAndUserItem({
       variables: {
         input: {
@@ -75,9 +76,16 @@ export const Success = ({ itemsByName, setQuery, name }) => {
         })
         break;
       case "Enter":
-        const item = itemsByName[selectedUserItem];
-        create({ variables: { input: { id: item.id } } })
-        setQuery("")
+        if (itemsByName.length !== 0) {
+          console.log('Adding existing item')
+          const item = itemsByName[selectedUserItem];
+          create({ variables: { input: { id: item.id } } })
+          setQuery("")
+        } else {
+          console.log('Adding new item')
+          createNewItem(event);
+          setQuery("")
+        }
         break;
       case "Tab":
         event.preventDefault() // may be contentious
@@ -102,8 +110,6 @@ export const Success = ({ itemsByName, setQuery, name }) => {
     return name.split(" ").map(word => capitalize(word)).join(" ")
   }
 
-
-
   return (
     <div className="absolute w-3/4 mt-16 ml-8 py-2 bg-white shadow-xl rounded-lg">
       {
@@ -117,7 +123,7 @@ export const Success = ({ itemsByName, setQuery, name }) => {
               {item.name}
             </a>
           }) :
-          <a onClick={(e) => createNewItem(e, upperCaseQuery())} className={`block px-4 py-2 hover:bg-indigo-700 hover:text-white`}>
+          <a onClick={(e) => createNewItem(e)} className={`block px-4 py-2 hover:bg-indigo-700 hover:text-white`}>
             Add <span className="font-bold">{upperCaseQuery()}</span>
           </a>
       }
