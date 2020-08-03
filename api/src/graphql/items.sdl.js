@@ -4,6 +4,7 @@ export const schema = gql`
   type Item {
     id: Int!
     name: String!
+    category: [Category]!
     published: Boolean!
     createdAt: DateTime!
     updatedAt: DateTime!

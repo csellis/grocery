@@ -41,6 +41,7 @@ export const Success = ({ itemsByName, setQuery, name }) => {
     refetchQueries: ["UserItemsQuery"]
   });
 
+  // Create a new Item, then Add item
   const createNewItem = (e) => {
     e.preventDefault();
     const newItemName = upperCaseQuery();
@@ -54,6 +55,7 @@ export const Success = ({ itemsByName, setQuery, name }) => {
     setQuery("")
   }
 
+  // Add an existing Item
   const itemSelect = (e, item) => {
     e.preventDefault();
     create({ variables: { input: { id: item.id } } })

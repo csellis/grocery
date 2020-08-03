@@ -21,10 +21,18 @@ export const itemsByName = ({ name }) => {
   })
 }
 
-export const createItem = ({ input }) => {
+
+// Category ID 42 === Uncategorized
+export const createItem = async ({ input }) => {
   requireAuth()
-  return db.item.create({
-    data: input,
+  console.log('Hellow Orld')
+  return await db.item.create({
+    data: {
+      name: input.name,
+      category: {
+        connect: { id: 42 }
+      }
+    },
   })
 }
 
@@ -36,13 +44,19 @@ export const createItemAndUserItem = async ({ input }) => {
     where: {
       name: {
         equals: name
-      }
+      },
     },
   })
+  console.log(itemExists)
   // Create item if it doesn't exist
   if (itemExists.length === 0) {
     const item = await db.item.create({
-      data: input
+      data: {
+        name,
+        category: {
+          connect: { id: 42 }
+        }
+      }
     });
     // Create userItem
     // Connect that with the user
@@ -74,8 +88,18 @@ export const updateItem = ({ id, input }) => {
 
 export const deleteItem = ({ id }) => {
   requireAuth()
-
+  console.log('deleteItem being hit for some reason')
   return db.item.delete({
     where: { id },
+    data: {
+      category: {
+        disconnect: true
+      }
+    }
   })
+}
+
+export const Item = {
+  categories: (_obj, { root }) =>
+    db.item.findOne({ where: { id: root.id } }).categories()
 }
