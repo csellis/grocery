@@ -12,6 +12,10 @@ import { Router, Route, Private } from '@redwoodjs/router'
 const Routes = () => {
   return (
     <Router>
+      <Route path="/categories/new" page={NewCategoryPage} name="newCategory" />
+      <Route path="/categories/{id:Int}/edit" page={EditCategoryPage} name="editCategory" />
+      <Route path="/categories/{id:Int}" page={CategoryPage} name="category" />
+      <Route path="/categories" page={CategoriesPage} name="categories" />
       <Route path="/" page={HomePage} name="home" />
       <Private unauthenticated="home">
         <Route path="/items/new" page={NewItemPage} name="newItem" />

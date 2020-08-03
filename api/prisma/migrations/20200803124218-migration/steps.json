@@ -97,6 +97,67 @@
     },
     {
       "tag": "CreateModel",
+      "model": "Category"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Category",
+      "field": "id",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Category",
+          "field": "id"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Category",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Category",
+          "field": "id"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "autoincrement()"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Category",
+      "field": "name",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Category",
+      "field": "items",
+      "type": "Item",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateModel",
       "model": "Item"
     },
     {
@@ -184,6 +245,59 @@
     {
       "tag": "CreateField",
       "model": "Item",
+      "field": "category",
+      "type": "Category",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Item",
+          "field": "category"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Item",
+          "field": "category"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[categoryId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Item",
+          "field": "category"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Item",
+      "field": "categoryId",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Item",
       "field": "createdAt",
       "type": "DateTime",
       "arity": "Required"
@@ -230,13 +344,6 @@
         },
         "directive": "updatedAt"
       }
-    },
-    {
-      "tag": "CreateField",
-      "model": "Item",
-      "field": "users",
-      "type": "ItemsOnUser",
-      "arity": "List"
     },
     {
       "tag": "CreateModel",
@@ -314,18 +421,18 @@
       "tag": "CreateField",
       "model": "User",
       "field": "items",
-      "type": "ItemsOnUser",
+      "type": "UserItem",
       "arity": "List"
     },
     {
       "tag": "CreateModel",
-      "model": "ItemsOnUser"
+      "model": "UserItem"
     },
     {
       "tag": "CreateField",
-      "model": "ItemsOnUser",
-      "field": "item",
-      "type": "Item",
+      "model": "UserItem",
+      "field": "id",
+      "type": "Int",
       "arity": "Required"
     },
     {
@@ -333,10 +440,21 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "ItemsOnUser",
-          "field": "item"
+          "model": "UserItem",
+          "field": "id"
         },
-        "directive": "relation"
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "UserItem",
+          "field": "id"
+        },
+        "directive": "default"
       }
     },
     {
@@ -345,38 +463,17 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "ItemsOnUser",
-          "field": "item"
+          "model": "UserItem",
+          "field": "id"
         },
-        "directive": "relation"
+        "directive": "default"
       },
-      "argument": "fields",
-      "value": "[itemId]"
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "ItemsOnUser",
-          "field": "item"
-        },
-        "directive": "relation"
-      },
-      "argument": "references",
-      "value": "[id]"
+      "argument": "",
+      "value": "autoincrement()"
     },
     {
       "tag": "CreateField",
-      "model": "ItemsOnUser",
-      "field": "itemId",
-      "type": "Int",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "ItemsOnUser",
+      "model": "UserItem",
       "field": "user",
       "type": "User",
       "arity": "Required"
@@ -386,7 +483,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "ItemsOnUser",
+          "model": "UserItem",
           "field": "user"
         },
         "directive": "relation"
@@ -398,7 +495,7 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "ItemsOnUser",
+          "model": "UserItem",
           "field": "user"
         },
         "directive": "relation"
@@ -412,7 +509,7 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "ItemsOnUser",
+          "model": "UserItem",
           "field": "user"
         },
         "directive": "relation"
@@ -422,46 +519,28 @@
     },
     {
       "tag": "CreateField",
-      "model": "ItemsOnUser",
+      "model": "UserItem",
       "field": "userId",
       "type": "String",
       "arity": "Required"
     },
     {
       "tag": "CreateField",
-      "model": "ItemsOnUser",
-      "field": "createdAt",
-      "type": "DateTime",
+      "model": "UserItem",
+      "field": "itemName",
+      "type": "String",
       "arity": "Required"
     },
     {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "ItemsOnUser",
-          "field": "createdAt"
-        },
-        "directive": "default"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "ItemsOnUser",
-          "field": "createdAt"
-        },
-        "directive": "default"
-      },
-      "argument": "",
-      "value": "now()"
+      "tag": "CreateField",
+      "model": "UserItem",
+      "field": "itemId",
+      "type": "Int",
+      "arity": "Required"
     },
     {
       "tag": "CreateField",
-      "model": "ItemsOnUser",
+      "model": "UserItem",
       "field": "picked",
       "type": "Boolean",
       "arity": "Required"
@@ -471,7 +550,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "ItemsOnUser",
+          "model": "UserItem",
           "field": "picked"
         },
         "directive": "default"
@@ -483,7 +562,7 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "ItemsOnUser",
+          "model": "UserItem",
           "field": "picked"
         },
         "directive": "default"
@@ -492,13 +571,21 @@
       "value": "false"
     },
     {
+      "tag": "CreateField",
+      "model": "UserItem",
+      "field": "createdAt",
+      "type": "DateTime",
+      "arity": "Required"
+    },
+    {
       "tag": "CreateDirective",
       "location": {
         "path": {
-          "tag": "Model",
-          "model": "ItemsOnUser"
+          "tag": "Field",
+          "model": "UserItem",
+          "field": "createdAt"
         },
-        "directive": "id"
+        "directive": "default"
       }
     },
     {
@@ -506,13 +593,46 @@
       "location": {
         "tag": "Directive",
         "path": {
-          "tag": "Model",
-          "model": "ItemsOnUser"
+          "tag": "Field",
+          "model": "UserItem",
+          "field": "createdAt"
         },
-        "directive": "id"
+        "directive": "default"
       },
       "argument": "",
-      "value": "[itemId, userId]"
+      "value": "now()"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserItem",
+      "field": "updatedAt",
+      "type": "DateTime",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "UserItem",
+          "field": "updatedAt"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserItem",
+          "field": "updatedAt"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "now()"
     }
   ]
 }
