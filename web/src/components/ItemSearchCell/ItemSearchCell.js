@@ -6,8 +6,11 @@ import { useState } from "react";
 export const QUERY = gql`
   query ItemSearchQuery($name: String!) {
     itemsByName(name: $name) {
-      name
       id
+      name
+      category {
+        name
+      }
     }
   }
 `
@@ -117,9 +120,14 @@ export const Success = ({ itemsByName, setQuery, name }) => {
           return <a
             href="#"
             onClick={(e) => itemSelect(e, item)}
-            className={`${selectedUserItem === i ? 'bg-indigo-700 text-white' : ''} block px-4 py-2 hover:bg-indigo-700 hover:text-white`}
+            className={`${selectedUserItem === i ? 'bg-indigo-700 text-white' : ''} flex justify-between px-4 py-2 hover:bg-indigo-700 hover:text-white`}
             key={item.id}>
-            {item.name}
+            <span>
+              {item.name}
+            </span>
+            <span className="text-gray-400">
+              {item.category.name}
+            </span>
           </a>
         })
       }

@@ -55,10 +55,15 @@ export const Success = ({ userItems }) => {
                 return (
                   <tr className="bg-white" key={userItem.id}>
                     <td className="flex justify-between px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                      {userItem.itemName}
-                      <a href="#" onClick={(e) => handleCancelClick(e, userItem.id)}>
-                        <svg fill="none" className="h-8 w-8 text-gray-500 hover:text-gray-600 cursor-pointer" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M6 18L18 6M6 6l12 12"></path></svg>
-                      </a>
+                      <span className="">
+                        {userItem.itemName}
+                      </span>
+                      <div className="flex items-center justify-center">
+                        <span className="text-gray-400">Category</span>
+                        <a href="#" className="pl-4" onClick={(e) => handleCancelClick(e, userItem.id)}>
+                          <svg fill="none" className="h-6 w-6 text-gray-500 hover:text-gray-600 cursor-pointer" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 )

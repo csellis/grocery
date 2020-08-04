@@ -100,6 +100,6 @@ export const deleteItem = ({ id }) => {
 }
 
 export const Item = {
-  categories: (_obj, { root }) =>
-    db.item.findOne({ where: { id: root.id } }).categories()
+  category: (_obj, { root }) =>
+    db.item.findOne({ where: { id: root.id } }).category()
 }
