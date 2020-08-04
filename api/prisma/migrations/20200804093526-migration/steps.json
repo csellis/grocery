@@ -1,0 +1,19 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "UserItem",
+      "field": "categoryName",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserItem",
+      "field": "categoryId",
+      "type": "Int",
+      "arity": "Required"
+    }
+  ]
+}

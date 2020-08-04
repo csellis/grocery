@@ -22,7 +22,7 @@ export const itemsByName = ({ name }) => {
 }
 
 
-// Category ID 42 === Uncategorized
+// Category ID 38 === Uncategorized
 export const createItem = async ({ input }) => {
   requireAuth()
   console.log('Hellow Orld')
@@ -30,7 +30,7 @@ export const createItem = async ({ input }) => {
     data: {
       name: input.name,
       category: {
-        connect: { id: 42 }
+        connect: { id: 38 }
       }
     },
   })
@@ -54,7 +54,7 @@ export const createItemAndUserItem = async ({ input }) => {
       data: {
         name,
         category: {
-          connect: { id: 42 }
+          connect: { id: 38 }
         }
       }
     });
@@ -88,7 +88,7 @@ export const updateItem = ({ id, input }) => {
 
 export const deleteItem = ({ id }) => {
   requireAuth()
-  console.log('deleteItem being hit for some reason')
+  // console.log('deleteItem being hit for some reason')
   return db.item.delete({
     where: { id },
     data: {
