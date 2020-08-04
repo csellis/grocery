@@ -42,7 +42,10 @@ export const deleteUserItem = async props => {
 export const createUserItem = async props => {
   const currentUser = await getUserServer()
   const item = await db.item.findOne({
-    where: { id: props.input.id }
+    where: { id: props.input.id },
+    include: {
+      category: true,
+    },
   })
 
   // find if userItem exists
@@ -55,12 +58,14 @@ export const createUserItem = async props => {
   if (userItemExists.length > 0) {
     return userItemExists[0].id
   }
-  // console.log(userItemExists)
+  // console.log(item)
 
   const userItem = await db.userItem.create({
     data: {
       itemName: item.name,
       itemId: item.id,
+      categoryName: item.category.name,
+      categoryId: item.category.id,
       picked: false,
       user: {
         connect: { id: currentUser.id }

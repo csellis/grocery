@@ -541,6 +541,20 @@
     {
       "tag": "CreateField",
       "model": "UserItem",
+      "field": "categoryName",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserItem",
+      "field": "categoryId",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserItem",
       "field": "picked",
       "type": "Boolean",
       "arity": "Required"

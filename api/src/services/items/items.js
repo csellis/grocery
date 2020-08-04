@@ -21,8 +21,9 @@ export const itemsByName = ({ name }) => {
   })
 }
 
+// Category ID 16 === Uncategorized
+const uncategorizedId = { id: 16 }
 
-// Category ID 38 === Uncategorized
 export const createItem = async ({ input }) => {
   requireAuth()
   console.log('Hellow Orld')
@@ -30,7 +31,7 @@ export const createItem = async ({ input }) => {
     data: {
       name: input.name,
       category: {
-        connect: { id: 38 }
+        connect: uncategorizedId
       }
     },
   })
@@ -47,25 +48,31 @@ export const createItemAndUserItem = async ({ input }) => {
       },
     },
   })
-  console.log(itemExists)
+  // console.log(itemExists)
   // Create item if it doesn't exist
   if (itemExists.length === 0) {
+    const uncategorized = await db.category.findOne({
+      where: uncategorizedId
+    });
+
     const item = await db.item.create({
       data: {
         name,
         category: {
-          connect: { id: 38 }
+          connect: uncategorizedId
         }
       }
     });
     // Create userItem
     // Connect that with the user
     const currentUser = await getUserServer()
-
+    console.log(uncategorized)
     const userItem = await db.userItem.create({
       data: {
         itemName: item.name,
         itemId: item.id,
+        categoryName: uncategorized.name,
+        categoryId: uncategorized.id,
         picked: false,
         user: {
           connect: { id: currentUser.id }

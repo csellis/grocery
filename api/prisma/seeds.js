@@ -32,13 +32,15 @@ async function main() {
     });
 
     if (!exists.length) {
-      const category = await db.category.create({
+      await db.category.create({
         data: {
           name
         }
       });
     }
   })
+
+  console.log(`Adding ${categories.length} categories.`)
 
   // items.map(async name => {
   //   const exists = await db.item.findMany({

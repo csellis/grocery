@@ -5,6 +5,7 @@ export const QUERY = gql`
     userItems {
       id
       itemName
+      categoryName
     }
   }
 `
@@ -59,7 +60,9 @@ export const Success = ({ userItems }) => {
                         {userItem.itemName}
                       </span>
                       <div className="flex items-center justify-center">
-                        <span className="text-gray-400">Category</span>
+                        <span className="text-gray-400">
+                          {userItem.categoryName}
+                        </span>
                         <a href="#" className="pl-4" onClick={(e) => handleCancelClick(e, userItem.id)}>
                           <svg fill="none" className="h-6 w-6 text-gray-500 hover:text-gray-600 cursor-pointer" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M6 18L18 6M6 6l12 12"></path></svg>
                         </a>
