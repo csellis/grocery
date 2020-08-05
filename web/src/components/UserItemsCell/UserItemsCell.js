@@ -24,6 +24,16 @@ const DELETE_USER_ITEM = gql`
   }
 `
 
+// This categorizes both canonical items, and user items
+// userItems.sdl.js & userItems service
+// Only need category ID
+const CATEGORIZE_ITEM = gql`
+  mutation CategorizeItem($input: CategorizeUserItemId!) {
+    categorizeItem(input: $input)
+  }
+`
+
+
 export const Loading = () => <div>Loading...</div>
 
 export const Empty = () => <div>Empty</div>
@@ -87,9 +97,6 @@ export const Success = ({ userItems, categories }) => {
   )
 }
 
-
-
-
 const UserItemsTable = ({ userItems, title, headerColor = "bg-gray-200", handleCancelClick, showCategory = true, categories }) => {
   const [selectedUserItem, setSelectedUserItem] = useState()
 
@@ -145,6 +152,10 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
   const [categoryFilter, setCategoryFilter] = useState("")
   const modalInput = useRef()
 
+  const [categorizeItem] = useMutation(CATEGORIZE_ITEM, {
+    refetchQueries: ["UserItemsQuery"]
+  })
+
   useEffect(() => {
     modalInput.current.focus();
   }, [])
@@ -155,7 +166,14 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
 
   const onChange = selectedCategory => {
     alert(`your favourite category is ${selectedCategory.name}`);
-
+    categorizeItem({
+      variables: {
+        input: {
+          userItemId: selectedUserItem.id,
+          categoryId: selectedCategory.id
+        }
+      }
+    })
   };
 
 

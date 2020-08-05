@@ -15,6 +15,14 @@ export const userItems = async () => {
   return [];
 }
 
+export const categorizeItem = async props => {
+  const { userItemId, categoryId } = props.input
+
+  console.log('Hello from userItems')
+  console.log(userItemId, categoryId)
+}
+
+
 export const deleteUserItem = async props => {
   const { userItemId } = props.input
 
