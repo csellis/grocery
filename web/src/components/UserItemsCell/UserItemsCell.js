@@ -155,6 +155,7 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
 
   const onChange = selectedCategory => {
     alert(`your favourite category is ${selectedCategory.name}`);
+
   };
 
 
@@ -195,7 +196,7 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
         <div className="sm:flex sm:items-start">
           <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
             <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-              Update {selectedUserItem.itemName}?
+              Update <span className="">{selectedUserItem.itemName}</span>?
             </h3>
           </div>
         </div>
@@ -206,8 +207,7 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
             <Downshift
               onChange={onChange}
               itemToString={categories => (categories ? categories.name : "")}
-              initialInputValue="g"
-              isOpen={true}
+              resultCount={5}
             >
               {({
                 getInputProps,
@@ -226,7 +226,7 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
                       {...getLabelProps()}
                     >
                       Choose your category
-                    </label>{" "}
+                    </label>
                     <br />
                     <input ref={modalInput} className="px-4 py-2" {...getInputProps({ placeholder: "Search Categories" })} />
                     {isOpen ? (
@@ -237,29 +237,29 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
                               !inputValue ||
                               item.name.toLowerCase().includes(inputValue.toLowerCase())
                           )
-                          .map((item, index) => (
-                            <div
-                              className="dropdown-item py-2 px-4"
-                              {...getItemProps({ key: item.name, index, item })}
-                              style={{
-                                backgroundColor:
-                                  highlightedIndex === index ? "lightgray" : "white",
-                                fontWeight: selectedItem === item ? "bold" : "normal"
-                              }}
-                            >
-                              {item.name}
-                            </div>
-                          ))}
+                          .map((item, index) => {
+                            const limit = 5;
+                            return index < limit && inputValue ? (
+                              <div
+                                className="dropdown-item py-2 px-4"
+                                {...getItemProps({ key: item.name, index, item })}
+                                style={{
+                                  backgroundColor:
+                                    highlightedIndex === index ? "lightgray" : "white",
+                                  fontWeight: selectedItem === item ? "bold" : "normal"
+                                }}
+                              >
+                                {item.name}
+                              </div>
+                            ) : null
+                          }
+
+                          )}
                       </div>
                     ) : null}
                   </div>
                 )}
-
             </Downshift>
-
-            <div className="">
-              {categoryFilter.length > 1 && categoryList()}
-            </div>
           </div>
         </div>
 
@@ -277,7 +277,6 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
           </span>
         </div>
       </div>
-    </div>
-
+    </div >
   )
 }
