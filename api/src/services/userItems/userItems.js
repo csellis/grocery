@@ -7,9 +7,9 @@ export const userItems = async () => {
   if (currentUser) {
     return db.userItem.findMany({
       where: { userId: currentUser.id },
-      orderBy: {
-        createdAt: "desc"
-      }
+      // orderBy: {
+      //   createdAt: "desc"
+      // }
     })
   }
   return [];

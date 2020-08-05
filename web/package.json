@@ -6,9 +6,10 @@
     "defaults"
   ],
   "dependencies": {
-    "@redwoodjs/auth": "^0.15.3",
-    "@redwoodjs/router": "^0.15.3",
-    "@redwoodjs/web": "^0.15.3",
+    "@redwoodjs/auth": "^0.15.4-canary.7",
+    "@redwoodjs/forms": "^0.15.4-canary.7",
+    "@redwoodjs/router": "^0.15.4-canary.7",
+    "@redwoodjs/web": "^0.15.4-canary.7",
     "downshift": "^6.0.2",
     "lodash": "^4.17.19",
     "netlify-identity-widget": "^1.8.0",
