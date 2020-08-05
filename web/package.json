@@ -9,6 +9,7 @@
     "@redwoodjs/auth": "^0.15.3",
     "@redwoodjs/router": "^0.15.3",
     "@redwoodjs/web": "^0.15.3",
+    "downshift": "^6.0.2",
     "netlify-identity-widget": "^1.8.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
