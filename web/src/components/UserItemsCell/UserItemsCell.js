@@ -165,7 +165,7 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
   }
 
   const onChange = selectedCategory => {
-    alert(`your favourite category is ${selectedCategory.name}`);
+    // alert(`your favourite category is ${selectedCategory.name}`);
     categorizeItem({
       variables: {
         input: {

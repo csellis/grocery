@@ -18,8 +18,40 @@ export const userItems = async () => {
 export const categorizeItem = async props => {
   const { userItemId, categoryId } = props.input
 
-  console.log('Hello from userItems')
-  console.log(userItemId, categoryId)
+  // console.log('Hello from userItems')
+  // console.log(userItemId, categoryId)
+
+  // require auth
+  requireAuth();
+  // fetch category
+  const category = await db.category.findOne({
+    where: { id: categoryId }
+  })
+  // console.log(category)
+  // fetch userItem
+  const userItem = await db.userItem.findOne({
+    where: { id: userItemId }
+  })
+  // console.log(userItem)
+  // update canonical item
+  const updatedItem = await db.category.update({
+    where: { id: categoryId },
+    data: {
+      items: {
+        connect: { id: userItem.itemId }
+      }
+    }
+  })
+  // update userItem
+  const updatedUserItem = await db.userItem.update({
+    where: { id: userItemId },
+    data: {
+      categoryName: category.name,
+      categoryId: category.id
+    }
+  })
+
+  return updatedUserItem.id;
 }
 
 
