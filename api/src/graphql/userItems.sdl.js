@@ -6,7 +6,7 @@ export const schema = gql`
     user: User!
     userId: String!
     categoryName: String!
-    cateogoryId: Int!
+    categoryId: Int!
     itemName: String!
     itemId: Int!
     picked: Boolean!

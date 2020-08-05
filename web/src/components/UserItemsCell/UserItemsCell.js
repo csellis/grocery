@@ -2,6 +2,7 @@ import { useMutation } from "@redwoodjs/web";
 import { useState, useRef, useEffect } from 'react'
 
 import Downshift from "downshift";
+import uniqBy from "lodash/uniqBy";
 
 export const QUERY = gql`
   query UserItemsQuery {
@@ -9,6 +10,7 @@ export const QUERY = gql`
       id
       itemName
       categoryName
+      categoryId
     }
 
     categories {
@@ -75,20 +77,23 @@ export const Success = ({ userItems, categories }) => {
 
   return (
     <div className="flex flex-col">
-      <UserItemsTable
-        handleCancelClick={handleCancelClick}
-        userItems={uncategorizedUserItems()}
-        title="Uncategorized Items"
-        headerColor="bg-red-200"
-        showCategory={false}
-        categories={categories}
-      />
+      {uncategorizedUserItems().length > 0 ? (
+        <UserItemsTable
+          handleCancelClick={handleCancelClick}
+          userItems={uncategorizedUserItems()}
+          title="Uncategorized Items"
+          headerColor="bg-red-200"
+          showCategory={false}
+          categories={categories}
+        />
+      ) : null}
+
 
       <UserItemsTable
         handleCancelClick={handleCancelClick}
         userItems={categorizedUserItems()}
         title="Grocery List"
-        headerColor="bg-gray-200"
+        headerColor="bg-indigo-200"
         showCategory={true}
         categories={categories}
       />
@@ -104,37 +109,48 @@ const UserItemsTable = ({ userItems, title, headerColor = "bg-gray-200", handleC
     setSelectedUserItem(() => userItem)
   }
 
+  const uniqueCategories = uniqBy(userItems, "categoryId").map(item => {
+    return { categoryId: item.categoryId, categoryName: item.categoryName }
+  })
+
   return (
     <div className="-my-2 py-2 mt-4 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
       <div className="align-middle inline-block min-w-full shadow  sm:rounded-lg border-b border-gray-200">
         <table className="min-w-full">
-          <thead>
-            <tr>
-              <th className={`${headerColor} px-6 py-3 border-b border-red-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider`}>
-                {title}
-              </th>
-            </tr>
-          </thead>
           <tbody>
-            {userItems.map(userItem => {
+            {uniqueCategories.map(category => {
+              const categoryUserItems = userItems.filter(userItem => {
+                return userItem.categoryId === category.categoryId
+              })
+
+              const headerBackground = category.categoryName === "Uncategorized" ? 'bg-red-200' : 'bg-indigo-200';
+
               return (
-                <tr className="bg-white" key={userItem.id} onClick={() => handleUserItemClick(userItem)}>
-                  <td className="flex justify-between px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                    <span className="">
-                      {userItem.itemName}
-                    </span>
-                    <div className="flex items-center justify-center">
-                      {showCategory ? (
-                        <span className="text-gray-400">
-                          {userItem.categoryName}
-                        </span>
-                      ) : ""}
-                      <a href="#" className="pl-4" onClick={(e) => handleCancelClick(e, userItem.id)}>
-                        <svg fill="none" className="h-6 w-6 text-gray-500 hover:text-gray-600 cursor-pointer" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M6 18L18 6M6 6l12 12"></path></svg>
-                      </a>
-                    </div>
-                  </td>
-                </tr>
+                <React.Fragment key={category.categoryId}>
+                  <tr className={`${headerBackground}`} key={category.categoryId}>
+                    <td className="flex justify-between px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                      <span className="">
+                        {category.categoryName}
+                      </span>
+                    </td>
+                  </tr>
+                  {categoryUserItems.map(userItem => {
+                    return (
+                      <tr className="bg-white" key={userItem.id} onClick={() => handleUserItemClick(userItem)}>
+                        <td className="flex justify-between px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                          <span className="">
+                            {userItem.itemName}
+                          </span>
+                          <div className="flex items-center justify-center">
+                            <a href="#" className="pl-4" onClick={(e) => handleCancelClick(e, userItem.id)}>
+                              <svg fill="none" className="h-6 w-6 text-gray-500 hover:text-gray-600 cursor-pointer" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </React.Fragment>
               )
             })}
           </tbody>
