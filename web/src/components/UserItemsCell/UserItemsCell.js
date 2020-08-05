@@ -1,5 +1,5 @@
 import { useMutation } from "@redwoodjs/web";
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 import Downshift from "downshift";
 
@@ -99,7 +99,7 @@ const UserItemsTable = ({ userItems, title, headerColor = "bg-gray-200", handleC
 
   return (
     <div className="-my-2 py-2 mt-4 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-      <div className="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+      <div className="align-middle inline-block min-w-full shadow  sm:rounded-lg border-b border-gray-200">
         <table className="min-w-full">
           <thead>
             <tr>
@@ -143,33 +143,15 @@ const UserItemsTable = ({ userItems, title, headerColor = "bg-gray-200", handleC
 
 const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories }) => {
   const [categoryFilter, setCategoryFilter] = useState("")
+  const modalInput = useRef()
+
+  useEffect(() => {
+    modalInput.current.focus();
+  }, [])
 
   const handleClearModal = () => {
     setSelectedUserItem(() => null)
   }
-
-
-  // console.log(categories)
-  const categoryList = () => {
-    const filteredCategories = categories.filter(category => {
-      const regex = new RegExp(categoryFilter, 'ig')
-      return regex.test(category.name);
-      // return category.name.match(categoryFilter)
-    })
-
-    return (
-      <>
-        {filteredCategories.map(filteredCategory => {
-          return <div className="bg-white mb-4 px-6 py-4 shadow-md" key={filteredCategory.id}>
-            {filteredCategory.name}
-          </div>
-        })
-        }
-      </>
-    )
-  }
-
-
 
   const onChange = selectedCategory => {
     alert(`your favourite category is ${selectedCategory.name}`);
@@ -202,7 +184,7 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
       From: "opacity-100 translate-y-0 sm:scale-100"
       To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
   --> */}
-      <div className="relative bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+      <div className="relative bg-white rounded-lg px-4 pt-5 pb-4 shadow-xl transform transition-all sm:max-w-lg sm:w-full sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
         <div className="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
           <button onClick={handleClearModal} type="button" className="text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150" aria-label="Close">
             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -224,6 +206,8 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
             <Downshift
               onChange={onChange}
               itemToString={categories => (categories ? categories.name : "")}
+              initialInputValue="g"
+              isOpen={true}
             >
               {({
                 getInputProps,
@@ -233,7 +217,7 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
                 highlightedIndex,
                 selectedItem,
                 highlightedItem,
-                getLabelProps
+                getLabelProps,
               }) => (
                   <div>
                     <label
@@ -244,9 +228,9 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
                       Choose your category
                     </label>{" "}
                     <br />
-                    <input {...getInputProps({ placeholder: "Search Categories" })} />
+                    <input ref={modalInput} className="px-4 py-2" {...getInputProps({ placeholder: "Search Categories" })} />
                     {isOpen ? (
-                      <div className="downshift-dropdown">
+                      <div className="downshift-dropdown absolute bg-white mt-2 py-2 rounded shadow-lg">
                         {categories
                           .filter(
                             item =>
@@ -255,7 +239,7 @@ const SelectedUserItem = ({ selectedUserItem, setSelectedUserItem, categories })
                           )
                           .map((item, index) => (
                             <div
-                              className="dropdown-item"
+                              className="dropdown-item py-2 px-4"
                               {...getItemProps({ key: item.name, index, item })}
                               style={{
                                 backgroundColor:
