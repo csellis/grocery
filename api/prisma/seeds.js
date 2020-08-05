@@ -5,6 +5,12 @@ const dotenv = require('dotenv')
 dotenv.config()
 const db = new PrismaClient()
 
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array)
+  }
+}
+
 async function main() {
   // Seed data is database data that needs to exist for your app to run.
   // Ideally this file should be idempotent: running it multiple times
@@ -16,29 +22,42 @@ async function main() {
   //     await db.user.create({ data: { name: 'Admin', email: 'admin@email.com' }})
   //   }
 
-  const items = ["Milk", "IPAs", "Beer", "Pizza"];
-  const categories = ["Baby", "Bakery", "Beer", "Beverages",
+  const categoryData = ["Baby", "Bakery", "Beer", "Beverages",
     "Bread", "Breakfast & Cereals", "Candy", "Canned Goods & Soups", "Cheese", "Cleaning & Home", "Clothing", "Condiments", "Cookies & Crackers", "Dairy",
     "Deli Counter", "Diet Foods", "Eggs", "Frozen Foods", "Fruits & Vegetables", "Grains & Pasta", "Greeting Cards", "Hardware",
     "International Foods", "Juice", "Kosher", "Meat & Seafood", "Organic Foods", "Other", "Paper Goods", "Party Accessories", "Personal Care",
     "Pet Care", "Pharmacy", "Ready to Bake", "School & Office", "Side Dishes", "Snack Foods", "Sodas", "Spices & Baking", "Spirits", "Tea & Coffee", "Uncategorized", "Wine"
   ]
 
-  categories.forEach(async name => {
-    const exists = await db.category.findMany({
-      where: {
-        name
-      }
-    });
+  const categories = [];
 
-    if (!exists.length) {
+  await asyncForEach(categoryData, async (category) => {
+    categories.push(
       await db.category.create({
-        data: {
-          name
+        date: {
+          name: category
         }
-      });
-    }
+      })
+    )
   })
+
+
+
+  // categories.forEach(async name => {
+  //   const exists = await db.category.findMany({
+  //     where: {
+  //       name
+  //     }
+  //   });
+
+  //   if (!exists.length) {
+  //     await db.category.create({
+  //       data: {
+  //         name
+  //       }
+  //     });
+  //   }
+  // })
 
   console.log(`Adding ${categories.length} categories.`)
 
