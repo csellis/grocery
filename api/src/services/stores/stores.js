@@ -1,4 +1,6 @@
 import { db } from 'src/lib/db'
+import { requireAuth, getUserServer } from "src/lib/auth";
+
 
 export const stores = () => {
   return db.store.findMany()
@@ -10,9 +12,17 @@ export const store = ({ id }) => {
   })
 }
 
-export const createStore = ({ input }) => {
+export const createStore = async ({ input }) => {
+
+  const currentUser = await getUserServer()
+
   return db.store.create({
-    data: input,
+    data: {
+      ...input,
+      user: {
+        connect: { id: currentUser.id }
+      }
+    },
   })
 }
 

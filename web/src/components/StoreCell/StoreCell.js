@@ -1,17 +1,19 @@
+import Store from 'src/components/Store'
+
 export const QUERY = gql`
-  query StoreQuery {
-    store {
+  query FIND_STORE_BY_ID($id: Int!) {
+    store: store(id: $id) {
       id
+      name
+      userId
     }
   }
 `
 
 export const Loading = () => <div>Loading...</div>
 
-export const Empty = () => <div>Empty</div>
-
-export const Failure = ({ error }) => <div>Error: {error.message}</div>
+export const Empty = () => <div>Store not found</div>
 
 export const Success = ({ store }) => {
-  return JSON.stringify(store)
+  return <Store store={store} />
 }

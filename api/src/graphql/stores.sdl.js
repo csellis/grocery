@@ -14,7 +14,7 @@ export const schema = gql`
 
   input CreateStoreInput {
     name: String!
-    userId: String!
+    userId: String
   }
 
   input UpdateStoreInput {

@@ -1,13 +1,12 @@
-import StoresCell from 'src/components/StoresCell'
+import NewStore from 'src/components/NewStore'
 import ApplicationLayout from 'src/layouts/ApplicationLayout';
 
-
-const StoresPage = () => {
+const NewStorePage = () => {
   return (
     <ApplicationLayout>
-      <StoresCell />
+      <NewStore />
     </ApplicationLayout>
   )
 }
 
-export default StoresPage
+export default NewStorePage

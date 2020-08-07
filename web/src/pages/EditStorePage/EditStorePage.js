@@ -1,11 +1,11 @@
-import StoresLayout from 'src/layouts/StoresLayout'
+import ApplicationLayout from 'src/layouts/ApplicationLayout'
 import EditStoreCell from 'src/components/EditStoreCell'
 
 const EditStorePage = ({ id }) => {
   return (
-    <StoresLayout>
+    <ApplicationLayout>
       <EditStoreCell id={id} />
-    </StoresLayout>
+    </ApplicationLayout>
   )
 }
 
