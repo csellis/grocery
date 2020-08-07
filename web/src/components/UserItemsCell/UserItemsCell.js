@@ -76,7 +76,7 @@ export const Success = ({ userItems, categories }) => {
 
 
   return (
-    <div className="flex flex-col sm:w-1/2">
+    <div className="flex flex-col md:w-2/3">
       {uncategorizedUserItems().length > 0 ? (
         <UserItemsTable
           handleCancelClick={handleCancelClick}

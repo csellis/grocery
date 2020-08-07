@@ -3,7 +3,12 @@ import { requireAuth, getUserServer } from "src/lib/auth";
 
 
 export const stores = () => {
-  return db.store.findMany()
+  const currentUser = await getUserServer()
+
+
+  return db.store.findMany({
+    where: { userId: currentUser.id }
+  })
 }
 
 export const store = ({ id }) => {
