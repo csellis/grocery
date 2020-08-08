@@ -6,8 +6,13 @@ export const QUERY = gql`
   query FIND_STORE_BY_ID($id: Int!) {
     store: store(id: $id) {
       id
-      name
       userId
+      name
+      StoreCategory {
+        categoryName
+        order
+        id
+      }
     }
   }
 `
@@ -55,6 +60,10 @@ export const Success = ({ store }) => {
     }
   }
 
+  const storeCategories = () => {
+    return store.StoreCategory.sort((a, b) => a.order - b.order);
+  }
+
   return (
     <div>
       <div className="flex justify-between mb-8">
@@ -74,6 +83,29 @@ export const Success = ({ store }) => {
           loading={loading}
         />
       </div>
+
+      <div className="bg-white px-4 py-5 w-2/3 border-b border-gray-200 sm:px-6">
+        <h3 className="text-lg leading-6 font-medium text-gray-900">
+          Store Categories
+        </h3>
+        <div class="py-3 text-sm">
+
+          {storeCategories().map(category => {
+
+            return (
+              <div class="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2">
+                <span class="bg-gray-400 h-2 w-2 m-2 rounded-full"></span>
+                <div class="flex-grow font-medium px-2">{category.categoryName}</div>
+                <div class="text-sm font-normal text-gray-500 tracking-wide">{category.order}</div>
+              </div>
+            )
+          })}
+
+        </div>
+      </div>
+
+
+
     </div >
   )
 }

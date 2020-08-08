@@ -2,13 +2,11 @@ import { db } from 'src/lib/db'
 import { requireAuth, getUserServer } from "src/lib/auth";
 
 
-export const stores = () => {
+export const stores = async () => {
   const currentUser = await getUserServer()
 
 
-  return db.store.findMany({
-    where: { userId: currentUser.id }
-  })
+  return db.store.findMany()
 }
 
 export const store = ({ id }) => {
@@ -20,8 +18,10 @@ export const store = ({ id }) => {
 export const createStore = async ({ input }) => {
 
   const currentUser = await getUserServer()
-
-  return db.store.create({
+  // get categories
+  const categories = await db.category.findMany({})
+  // get storeId
+  const store = await db.store.create({
     data: {
       ...input,
       user: {
@@ -29,6 +29,21 @@ export const createStore = async ({ input }) => {
       }
     },
   })
+  // create all storeCategories
+  categories.forEach(async (category, index) => {
+    await db.storeCategory.create({
+      data: {
+        order: index,
+        categoryName: category.name,
+        categoryId: category.id,
+        store: {
+          connect: { id: store.id }
+        }
+      }
+    })
+  })
+  // return store
+  return store
 }
 
 export const updateStore = ({ id, input }) => {
@@ -38,7 +53,17 @@ export const updateStore = ({ id, input }) => {
   })
 }
 
-export const deleteStore = ({ id }) => {
+export const deleteStore = async ({ id }) => {
+
+  const upd = await db.store.update({
+    where: { id },
+    data: {
+      StoreCategory: {
+        deleteMany: [{ storeId: id }],
+      },
+    },
+  })
+  console.log(upd)
   return db.store.delete({
     where: { id },
   })
