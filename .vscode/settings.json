@@ -12,5 +12,24 @@
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
     "**/.hg/store/**": true
-  }
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#4fce9d",
+    "activityBar.activeBorder": "#9e50ce",
+    "activityBar.background": "#4fce9d",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#9e50ce",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "statusBar.background": "#33b784",
+    "statusBar.border": "#33b784",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#288f67",
+    "titleBar.activeBackground": "#33b784",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.border": "#33b784",
+    "titleBar.inactiveBackground": "#33b78499",
+    "titleBar.inactiveForeground": "#15202b99"
+  },
+  "peacock.color": "#33b784"
 }
