@@ -14,7 +14,7 @@ export const stores = async () => {
 }
 
 export const store = ({ id }) => {
-  return db.store.findOne({
+  return id === null ? [] : db.store.findOne({
     where: { id },
   })
 }

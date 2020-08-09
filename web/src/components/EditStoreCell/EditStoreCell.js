@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { useMutation, useFlash } from '@redwoodjs/web'
 import { navigate, routes, Link } from '@redwoodjs/router'
 import StoreForm from 'src/components/StoreForm'
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import arrayMove from 'array-move';
 
 export const QUERY = gql`
   query FIND_STORE_BY_ID($id: Int!) {
@@ -89,6 +92,7 @@ export const Success = ({ store }) => {
           Store Categories
         </h3>
         <div className="py-3 text-sm">
+          <SortableComponent storeCategories={storeCategories()} />
 
           {storeCategories().map(category => {
 
@@ -102,12 +106,58 @@ export const Success = ({ store }) => {
               </div>
             )
           })}
-
         </div>
       </div>
-
-
-
     </div >
   )
+}
+
+
+
+const SortableItem = SortableElement(({ value, index }) => {
+  return (
+    <li>{value.categoryName} - {value.order}</li>
+  )
+});
+
+const SortableList = SortableContainer(({ items }) => {
+  // console.log(items)
+  return (
+    <ul>
+      {items?.map((value, index) => {
+        //console.log(value)
+        return (
+          <SortableItem key={value.id} index={index} value={value} />
+        )
+      }
+      )}
+    </ul>
+  );
+});
+
+// 1. Add a save button
+// 2. Add a handler
+// 3. Create a mutation to save new order for this list to RW
+// 4. RefetchQuery
+
+
+const SortableComponent = ({ storeCategories }) => {
+
+  const [items, setItems] = useState(storeCategories)
+
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    setItems((items) => {
+      // console.table(items)
+      // console.log(`Old Index: ${oldIndex}`)
+      // console.log(`New Index: ${newIndex}`)
+
+      const newArray = arrayMove(items, oldIndex, newIndex);
+
+      // console.table(newArray)
+      return newArray
+    })
+  };
+  ////console.table(items)
+
+  return <SortableList items={items} onSortEnd={onSortEnd} />
 }

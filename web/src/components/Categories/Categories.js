@@ -47,7 +47,7 @@ const CategoriesList = ({ categories }) => {
 
   return (
     <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
+      <table className="rw-table bg-white rounded shadow">
         <thead>
           <tr>
             <th>Id</th>
