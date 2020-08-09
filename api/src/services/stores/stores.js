@@ -6,7 +6,11 @@ export const stores = async () => {
   const currentUser = await getUserServer()
 
 
-  return db.store.findMany()
+  return db.store.findMany({
+    where: {
+      userId: currentUser.id
+    }
+  })
 }
 
 export const store = ({ id }) => {
@@ -29,19 +33,35 @@ export const createStore = async ({ input }) => {
       }
     },
   })
+  // sort categories
+  categories.sort((a, b) => a.id - b.id)
+
+  function wait(ms = 0) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms)
+    })
+  }
+
   // create all storeCategories
   categories.forEach(async (category, index) => {
-    await db.storeCategory.create({
-      data: {
-        order: index,
-        categoryName: category.name,
-        categoryId: category.id,
-        store: {
-          connect: { id: store.id }
-        }
-      }
+    wait(20 * index).then(() => {
+      return createStoreCategory();
     })
+
+    function createStoreCategory() {
+      return db.storeCategory.create({
+        data: {
+          order: index,
+          categoryName: category.name,
+          categoryId: category.id,
+          store: {
+            connect: { id: store.id }
+          }
+        }
+      })
+    }
   })
+
   // return store
   return store
 }

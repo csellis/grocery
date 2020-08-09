@@ -9,7 +9,7 @@ export const schema = gql`
 
   type Query {
     stores: [Store!]!
-    store(id: Int!): Store!
+    store(id: Int): Store!
   }
 
   input CreateStoreInput {
