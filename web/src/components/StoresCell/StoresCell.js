@@ -1,7 +1,5 @@
 import { Link, routes } from '@redwoodjs/router'
-
-import Stores from 'src/components/Stores'
-
+import Stores from "src/components/Stores";
 export const QUERY = gql`
   query STORES {
     stores {

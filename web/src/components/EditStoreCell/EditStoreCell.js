@@ -88,15 +88,17 @@ export const Success = ({ store }) => {
         <h3 className="text-lg leading-6 font-medium text-gray-900">
           Store Categories
         </h3>
-        <div class="py-3 text-sm">
+        <div className="py-3 text-sm">
 
           {storeCategories().map(category => {
 
             return (
-              <div class="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2">
-                <span class="bg-gray-400 h-2 w-2 m-2 rounded-full"></span>
-                <div class="flex-grow font-medium px-2">{category.categoryName}</div>
-                <div class="text-sm font-normal text-gray-500 tracking-wide">{category.order}</div>
+              <div
+                key={category.id}
+                className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2">
+                <span className="bg-gray-400 h-2 w-2 m-2 rounded-full"></span>
+                <div className="flex-grow font-medium px-2">{category.categoryName}</div>
+                <div className="text-sm font-normal text-gray-500 tracking-wide">{category.order}</div>
               </div>
             )
           })}
