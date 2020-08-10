@@ -1,5 +1,6 @@
 import { db } from 'src/lib/db'
 import { getUserServer, requireAuth } from 'src/lib/auth'
+import { AuthenticationError, context } from '@redwoodjs/api'
 
 export const userItems = async () => {
   const currentUser = await getUserServer();
@@ -14,6 +15,7 @@ export const userItems = async () => {
   }
   return [];
 }
+
 
 export const categorizeItem = async props => {
   const { userItemId, categoryId } = props.input
@@ -52,6 +54,30 @@ export const categorizeItem = async props => {
   })
 
   return updatedUserItem.id;
+}
+
+export const updateUserItem = async props => {
+  const { id, picked } = props.input
+
+  // // require a user
+  requireAuth()
+  // authorize user
+  const currentUser = await getUserServer()
+  const userItem = await db.userItem.findOne({
+    where: { id }
+  })
+
+  if (currentUser.id === userItem.userId) {
+    const updatedItem = await db.userItem.update({
+      where: { id },
+      data: { picked }
+    })
+    // console.log(updatedItem)
+    return updatedItem.id
+  } else {
+    throw new AuthenticationError('Sorry, you are not authorized to do that.')
+    console.warn("Not the user")
+  }
 }
 
 

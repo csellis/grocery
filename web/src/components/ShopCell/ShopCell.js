@@ -3,6 +3,14 @@ import { useState, useRef, useEffect } from 'react'
 
 import Downshift from "downshift";
 import uniqBy from "lodash/uniqBy";
+import { filter } from "lodash";
+
+
+const PICK_ITEM = gql`
+  mutation PickItem($input: UpdateUserItemInput) {
+    updateUserItem(input: $input)
+  }
+`
 
 export const QUERY = gql`
   query ShopQuery($selectedStore: Int) {
@@ -11,6 +19,7 @@ export const QUERY = gql`
       itemName
       categoryName
       categoryId
+      picked
     }
 
     store(id: $selectedStore) {
@@ -32,6 +41,9 @@ export const Empty = () => <div>Empty</div>
 export const Failure = ({ error }) => <div>Error: {error.message}</div>
 
 export const Success = ({ userItems, selectedStore, store }) => {
+  const [updateUserItem] = useMutation(PICK_ITEM, {
+    refetchQueries: ["ShopQuery"]
+  })
   // Set defaults of virtual list, set used to remove duplicates
   const filteredList = []
   let categorySet = new Set()
@@ -50,9 +62,26 @@ export const Success = ({ userItems, selectedStore, store }) => {
       }
     })
   })
+  // console.table(filteredList)
 
   // convert set to array
   const keys = [...categorySet]
+
+  // create onclick handler
+  // mutation
+
+  const handleUserItemClick = (userItem) => {
+    // console.log(userItem)
+    updateUserItem({
+      variables: {
+        input: {
+          id: userItem.id,
+          picked: !userItem.picked
+        }
+      }
+    })
+
+  }
 
   return (
     <div>
@@ -69,9 +98,16 @@ export const Success = ({ userItems, selectedStore, store }) => {
               {categoryItems.map(categoryItem => {
                 return (
                   <li
+                    onClick={() => handleUserItemClick(categoryItem)}
                     className="border-b hover:bg-gray-200 cursor-pointer border-gray-200 px-4 py-2 flex justify-between"
                     key={categoryItem.id}>
-                    {categoryItem.itemName}
+                    <span>
+
+                      {categoryItem.itemName}
+                    </span>
+                    <span>
+                      {categoryItem.picked ? "Yes" : "No"}
+                    </span>
                   </li>
                 )
               })}
