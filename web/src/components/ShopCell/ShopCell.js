@@ -45,7 +45,10 @@ export const Success = ({ userItems, selectedStore, store }) => {
     refetchQueries: ["ShopQuery"]
   })
   // Set defaults of virtual list, set used to remove duplicates
+  // filteredList is the list with Items not currently picked and sorted by
+  // category order for the store
   const filteredList = []
+  const pickedList = []
   let categorySet = new Set()
 
   // Sort incoming categories
@@ -56,13 +59,16 @@ export const Success = ({ userItems, selectedStore, store }) => {
   // Iterate over categories pulling out categories not in user's grocery list
   sorted.forEach(storeCategory => {
     userItems.forEach(userItem => {
+
       if (storeCategory.categoryId === userItem.categoryId) {
+        if (userItem.picked) {
+          return pickedList.push({ ...userItem, order: storeCategory.order })
+        }
         filteredList.push({ ...userItem, order: storeCategory.order })
         categorySet.add(storeCategory)
       }
     })
   })
-  // console.table(filteredList)
 
   // convert set to array
   const keys = [...categorySet]
@@ -80,19 +86,18 @@ export const Success = ({ userItems, selectedStore, store }) => {
         }
       }
     })
-
   }
 
   return (
-    <div>
-      <ul className="bg-white shadow rounded">
+    <div className="">
+      <ul className="mb-4 bg-white shadow rounded">
         {keys.map((category) => {
           const categoryItems = filteredList.filter((listItem) => {
             return listItem.categoryId === parseInt(category.categoryId)
           })
           return (
             <React.Fragment key={category.id}>
-              <li className="border-b bg-red-300 cursor-pointer border-gray-200 px-4 py-2 flex justify-between">
+              <li className="border-b bg-blue-300 cursor-pointer border-gray-200 px-4 py-2 flex justify-between">
                 {category.categoryName}
               </li>
               {categoryItems.map(categoryItem => {
@@ -105,18 +110,32 @@ export const Success = ({ userItems, selectedStore, store }) => {
 
                       {categoryItem.itemName}
                     </span>
-                    <span>
-                      {categoryItem.picked ? "Yes" : "No"}
-                    </span>
+
                   </li>
                 )
               })}
             </React.Fragment>
           )
         })}
-
       </ul>
+
+      <PickedTable pickedList={pickedList} handleUserItemClick={handleUserItemClick} />
     </div>
   )
 }
 
+
+export const PickedTable = ({ pickedList, handleUserItemClick }) => {
+  return (
+    <ul className="bg-white rounded shadow mb-4">
+      <li className="border-b bg-red-300 cursor-pointer border-gray-200 px-4 py-2 flex justify-between">Picked Items</li>
+      {pickedList.map(item => {
+        return (
+          <li onClick={() => handleUserItemClick(item)} className="border-b hover:bg-gray-200 cursor-pointer border-gray-200 px-4 py-2 flex justify-between" key={item.id}>
+            {item.itemName}
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
