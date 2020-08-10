@@ -24,6 +24,27 @@ export const updateStoreCategory = ({ id, input }) => {
     where: { id },
   })
 }
+export const updateStoreOrder = ({ input }) => {
+
+  function wait(ms = 0) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms)
+    })
+  }
+
+  // create all storeCategories
+  input.forEach(async (storeCategory, index) => {
+    wait(20 * index).then(() => {
+      return db.storeCategory.update({
+        where: { id: storeCategory.id },
+        data: { order: storeCategory.order }
+      });
+    })
+  })
+
+  // return store
+  return 1
+}
 
 export const deleteStoreCategory = ({ id }) => {
   return db.storeCategory.delete({

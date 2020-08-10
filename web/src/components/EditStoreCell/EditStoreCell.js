@@ -35,6 +35,12 @@ const DELETE_STORE_MUTATION = gql`
   }
 `
 
+const UPDATE_STORE_ORDER = gql`
+  mutation UpdateStoreOrder($input: [StoreCategoryOrder]) {
+    updateStoreOrder(input: $input)
+  }
+`
+
 export const Loading = () => <div>Loading...</div>
 
 export const Success = ({ store }) => {
@@ -87,51 +93,54 @@ export const Success = ({ store }) => {
         />
       </div>
 
-      <div className="bg-white px-4 py-5 w-2/3 border-b border-gray-200 sm:px-6">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">
-          Store Categories
-        </h3>
+      <div className="bg-white px-4 py-5 w-full sm:w-2/3 border-b border-gray-200 sm:px-6">
+
         <div className="py-3 text-sm">
-          <SortableComponent storeCategories={storeCategories()} />
-
-          {storeCategories().map(category => {
-
-            return (
-              <div
-                key={category.id}
-                className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2">
-                <span className="bg-gray-400 h-2 w-2 m-2 rounded-full"></span>
-                <div className="flex-grow font-medium px-2">{category.categoryName}</div>
-                <div className="text-sm font-normal text-gray-500 tracking-wide">{category.order}</div>
-              </div>
-            )
-          })}
+          <SortableComponent storeCategories={storeCategories()} store={store} />
         </div>
       </div>
     </div >
   )
 }
 
-
-
 const SortableItem = SortableElement(({ value, index }) => {
   return (
-    <li>{value.categoryName} - {value.order}</li>
+    <li className="border-t border-gray-200">
+      <a href="#" className="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
+        <div className="px-4 py-4 flex items-center sm:px-6">
+          <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
+              <div className="text-sm leading-5 font-medium text-indigo-600 truncate">
+                {value.categoryName}
+              </div>
+            </div>
+            <div className="mt-4 flex-shrink-0 sm:mt-0">
+              <div className="flex overflow-hidden">
+                {value.order}
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </li>
   )
 });
 
 const SortableList = SortableContainer(({ items }) => {
   // console.log(items)
   return (
-    <ul>
-      {items?.map((value, index) => {
-        //console.log(value)
-        return (
-          <SortableItem key={value.id} index={index} value={value} />
-        )
-      }
-      )}
-    </ul>
+    <div className="bg-white shadow overflow-hidden sm:rounded-md">
+      <ul>
+        {items?.map((value, index) => {
+          //console.log(value)
+          return (
+            <SortableItem key={value.id} index={index} value={value} />
+          )
+        }
+        )}
+
+      </ul>
+    </div>
   );
 });
 
@@ -141,9 +150,12 @@ const SortableList = SortableContainer(({ items }) => {
 // 4. RefetchQuery
 
 
-const SortableComponent = ({ storeCategories }) => {
+const SortableComponent = ({ storeCategories, store }) => {
 
   const [items, setItems] = useState(storeCategories)
+
+
+  const [updateStoreOrder] = useMutation(UPDATE_STORE_ORDER)
 
   const onSortEnd = ({ oldIndex, newIndex }) => {
     setItems((items) => {
@@ -155,9 +167,38 @@ const SortableComponent = ({ storeCategories }) => {
 
       // console.table(newArray)
       return newArray
-    })
+    });
   };
   ////console.table(items)
 
-  return <SortableList items={items} onSortEnd={onSortEnd} />
+  const handleSaveOrder = () => {
+    // console.table(items)
+    const newOrder = items.map((item, index) => {
+      item.order = index
+      delete item.__typename
+      return item;
+    })
+    // console.table(newOrder)
+    // console.log(newOrder)
+    updateStoreOrder({
+      variables: {
+        input: newOrder
+      }
+    })
+  }
+
+  return (
+    <div>
+      <div className="flex justify-between mb-4">
+        <span className="text-lg text-gray-800">
+          {store.name}
+        </span>
+        <span>
+          <button onClick={handleSaveOrder} className="border rounded text-gray-800 px-4 py-2 hover:bg-gray-100 focus:bg-gray-100">Save</button>
+        </span>
+      </div>
+      <SortableList items={items} onSortEnd={onSortEnd} />
+    </div>
+  )
+
 }

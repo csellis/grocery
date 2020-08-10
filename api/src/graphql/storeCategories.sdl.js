@@ -27,6 +27,12 @@ export const schema = gql`
     storeId: Int
   }
 
+  input StoreCategoryOrder {
+    id: Int
+    order: Int
+    categoryName: String
+  }
+
   type Mutation {
     createStoreCategory(input: CreateStoreCategoryInput!): StoreCategory!
     updateStoreCategory(
@@ -34,5 +40,6 @@ export const schema = gql`
       input: UpdateStoreCategoryInput!
     ): StoreCategory!
     deleteStoreCategory(id: Int!): StoreCategory!
+    updateStoreOrder(input: [StoreCategoryOrder]): ID!
   }
 `

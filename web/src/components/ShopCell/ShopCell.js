@@ -32,34 +32,53 @@ export const Empty = () => <div>Empty</div>
 export const Failure = ({ error }) => <div>Error: {error.message}</div>
 
 export const Success = ({ userItems, selectedStore, store }) => {
-
-
+  // Set defaults of virtual list, set used to remove duplicates
   const filteredList = []
+  let categorySet = new Set()
 
-  store.StoreCategory.forEach(storeCategory => {
+  // Sort incoming categories
+  const sorted = store.StoreCategory.sort((a, z) => {
+    return a.order - z.order
+  })
+
+  // Iterate over categories pulling out categories not in user's grocery list
+  sorted.forEach(storeCategory => {
     userItems.forEach(userItem => {
       if (storeCategory.categoryId === userItem.categoryId) {
         filteredList.push({ ...userItem, order: storeCategory.order })
+        categorySet.add(storeCategory)
       }
     })
   })
 
+  // convert set to array
+  const keys = [...categorySet]
 
   return (
     <div>
       <ul className="bg-white shadow rounded">
-        {filteredList.map(userItem => {
+        {keys.map((category) => {
+          const categoryItems = filteredList.filter((listItem) => {
+            return listItem.categoryId === parseInt(category.categoryId)
+          })
           return (
-            <li className="border-b border-gray-200 px-4 py-2 flex justify-between" key={userItem.id}>
-              <span>
-                {userItem.itemName}
-              </span>
-              <span className="text-gray-400">
-                {userItem.categoryName}
-              </span>
-            </li>
+            <React.Fragment key={category.id}>
+              <li className="border-b bg-red-300 cursor-pointer border-gray-200 px-4 py-2 flex justify-between">
+                {category.categoryName}
+              </li>
+              {categoryItems.map(categoryItem => {
+                return (
+                  <li
+                    className="border-b hover:bg-gray-200 cursor-pointer border-gray-200 px-4 py-2 flex justify-between"
+                    key={categoryItem.id}>
+                    {categoryItem.itemName}
+                  </li>
+                )
+              })}
+            </React.Fragment>
           )
         })}
+
       </ul>
     </div>
   )

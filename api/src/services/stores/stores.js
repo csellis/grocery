@@ -9,6 +9,13 @@ export const stores = async () => {
   return db.store.findMany({
     where: {
       userId: currentUser.id
+    },
+    include: {
+      StoreCategory: {
+        orderBy: {
+          order: "desc"
+        }
+      }
     }
   })
 }
