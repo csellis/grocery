@@ -56,6 +56,20 @@ export const categorizeItem = async props => {
   return updatedUserItem.id;
 }
 
+export const checkOutList = async props => {
+  console.log(props)
+
+  // get user
+  const userId = await getUserServer().id;
+  // find userItems that have been picked
+  const pickedUserItems = await db.userItem.deleteMany({
+    where: { picked: true, userId }
+  })
+  // console.log(pickedUserItems)
+  // delete each of those items
+  return pickedUserItems.count
+}
+
 export const updateUserItem = async props => {
   const { id, picked } = props.input
 

@@ -1,7 +1,7 @@
 import { Link } from '@redwoodjs/router'
 import ApplicationLayout from "src/layouts/ApplicationLayout";
 import UserItems from 'src/components/UserItemsCell'
-const HomePage = () => {
+const PlanPage = () => {
   return (
     <ApplicationLayout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
@@ -12,4 +12,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default PlanPage

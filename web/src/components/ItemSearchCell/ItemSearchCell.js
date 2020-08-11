@@ -20,6 +20,15 @@ const SAVE_USER_ITEM = gql`
     createUserItem(input: $input)
   }
 `
+// Thank you AdamTheCro
+// const GUARDAR_ARTICULO = gql`
+//   mutation GuardarArticulo($entrada: GuardarArticulo) {
+//     creerArtciulYUsarioArticulo(entrada: $entrada) {
+//       id
+//       nombre
+//     }
+//   }
+// `
 
 const CREATE_NEW_ITEM = gql`
   mutation CreateNewItem($input: CreateItemInput) {
@@ -37,11 +46,11 @@ export const Success = ({ itemsByName, setQuery, name }) => {
   const [selectedUserItem, setSelectedUserItem] = useState(0)
 
   const [create] = useMutation(SAVE_USER_ITEM, {
-    refetchQueries: ["UserItemsQuery"]
+    refetchQueries: ["UserItemsQuery", "ShopQuery"]
   })
 
   const [createItemAndUserItem] = useMutation(CREATE_NEW_ITEM, {
-    refetchQueries: ["UserItemsQuery"]
+    refetchQueries: ["UserItemsQuery", "ShopQuery"]
   });
 
   // Create a new Item, then Add item

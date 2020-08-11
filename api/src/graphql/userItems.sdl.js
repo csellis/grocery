@@ -37,10 +37,15 @@ export const schema = gql`
     picked: Boolean
   }
 
+  input CheckOutInput {
+    id: Int
+  }
+
   type Mutation {
     updateUserItem(input: UpdateUserItemInput): ID
     createUserItem(input: CreateUserItemInput): ID
     deleteUserItem(input: DeleteUserItemInput!): ID
     categorizeItem(input: CategorizeUserItemId!): ID
+    checkOutList(input: CheckOutInput!): ID
   }
 `

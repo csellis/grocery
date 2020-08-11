@@ -56,12 +56,16 @@ const ApplicationLayout = ({ children }) => {
             </div>
             <div className="flex-shrink-0 flex items-center px-4">
               <div className="font-medium text-3xl text-gray-100">
-                Bee Lion
+                <Link
+                  to={routes.landing()}
+                >
+                  Bee Lion
+              </Link>
               </div>
             </div>
             <div className="mt-5 flex-1 h-0 overflow-y-auto">
               <nav className="px-2">
-                <Link to={routes.home()} className="group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                <Link to={routes.plan()} className="group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
                   <svg className="mr-4 h-6 w-6 text-indigo-400 group-hover:text-indigo-300 group-focus:text-indigo-300 transition ease-in-out duration-150" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                   </svg>
@@ -102,13 +106,17 @@ const ApplicationLayout = ({ children }) => {
           <div className="flex flex-col flex-grow bg-indigo-800 pt-5 pb-4 overflow-y-auto">
             <div className="flex items-center flex-shrink-0 px-4">
               <div className="font-medium text-3xl text-gray-100">
-                Bee Lion
+                <Link
+                  to={routes.landing()}
+                >
+                  Bee Lion
+                </Link>
               </div>
             </div>
             <div className="mt-5 flex-1 flex flex-col">
               <nav className="flex-1 px-2 bg-indigo-800">
                 <NavLink
-                  to={routes.home()}
+                  to={routes.plan()}
                   className="group flex items-center px-2 py-2 text-sm leading-5 text-opacity-100 font-medium text-indigo-300 rounded-md hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150"
                   activeClassName="text-white bg-indigo-700"
                 >

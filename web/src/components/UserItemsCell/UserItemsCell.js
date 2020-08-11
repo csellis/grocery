@@ -35,7 +35,6 @@ const CATEGORIZE_ITEM = gql`
   }
 `
 
-
 export const Loading = () => <div>Loading...</div>
 
 export const Empty = () => <div>Empty</div>
