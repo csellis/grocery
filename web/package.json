@@ -6,10 +6,11 @@
     "defaults"
   ],
   "dependencies": {
-    "@redwoodjs/auth": "^0.15.4-canary.7",
-    "@redwoodjs/forms": "^0.15.4-canary.7",
-    "@redwoodjs/router": "^0.15.4-canary.7",
-    "@redwoodjs/web": "^0.15.4-canary.7",
+    "@auth0/auth0-spa-js": "^1.11.0",
+    "@redwoodjs/auth": "^0.15.4-canary.20",
+    "@redwoodjs/forms": "^0.15.4-canary.20",
+    "@redwoodjs/router": "^0.15.4-canary.20",
+    "@redwoodjs/web": "^0.15.4-canary.20",
     "array-move": "^3.0.1",
     "downshift": "^6.0.2",
     "lodash": "^4.17.19",

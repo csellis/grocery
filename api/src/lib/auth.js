@@ -4,7 +4,7 @@
 //   export const getCurrentUser = async ({ email }) => {
 //     return await db.user.findOne({ where: { email } })
 //   }
-
+import { context } from '@redwoodjs/api'
 import { AuthenticationError } from '@redwoodjs/api'
 import { db } from './db'
 // export const getCurrentUser = async (decoded, { token, type }) => {
@@ -15,6 +15,8 @@ import { db } from './db'
 // optionally raise an error if they're not.
 
 export const requireAuth = () => {
+  console.log('Issued from requireAuth()')
+  console.log(context)
   if (!context.currentUser) {
     throw new AuthenticationError("You don't have permission to do that.")
   }
@@ -24,11 +26,17 @@ export const getUserServer = async () => {
   return context.currentUser;
 }
 
-export const getCurrentUser = async ({ name, email }) => {
-  const user =
-    (await db.user.findOne({
-      where: { email },
-    })) || (await createUser(name, email))
+export const getCurrentUser = async (decoded, { type, token }) => {
+  // console.log(decoded)
+  // Defined in auth0 Rules
+  const email = decoded["http://localhost:8910/email"]
+  if (!email) {
+    throw new AuthenticationError('Uh oh, no email')
+  }
+  let user = await db.user.findOne({ where: { email } })
+  if (!user) {
+    user = await db.user.create({ data: { email } })
+  }
   return user
 }
 

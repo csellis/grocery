@@ -1,9 +1,33 @@
+import { useState } from "react";
+import { NavLink, Link, routes, navigate } from '@redwoodjs/router'
+import { useAuth } from "@redwoodjs/auth";
+
+import UserAuthTools from 'src/components/UserAuthTools';
+
+
 const LandingLayout = ({ children }) => {
+
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const { logIn, logOut, isAuthenticated, currentUser } = useAuth();
+
+
+  const handleLoginClick = async () => {
+    if (isAuthenticated) {
+      await logOut()
+      navigate('/')
+    } else {
+      await logIn()
+      navigate('/plan')
+    }
+  }
+  console.log(`Is authenticated: ${isAuthenticated}`)
+
+
   return (
     <div className="relative bg-gray-50 overflow-hidden">
 
       {/* Start of Hero */}
-      <div className="hidden sm:block sm:absolute sm:inset-y-0 sm:h-full sm:w-full">
+      <div className="hidden md:block md:absolute md:inset-y-0 md:h-full md:w-full">
         <div className="relative h-full max-w-screen-xl mx-auto">
           <svg className="absolute right-full transform translate-y-1/4 translate-x-1/4 lg:translate-x-1/2" width="404" height="784" fill="none" viewBox="0 0 404 784">
             <defs>
@@ -33,9 +57,9 @@ const LandingLayout = ({ children }) => {
                   <img className="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-on-white.svg" alt="Logo" />
                 </a>
                 <div className="-mr-2 flex items-center md:hidden">
-                  <button type="button" className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" id="main-menu" aria-label="Main menu" aria-haspopup="true">
+                  <button onClick={() => setMobileOpen(!mobileOpen)} type="button" className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" id="main-menu" aria-label="Main menu" aria-haspopup="true">
                     <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                   </button>
                 </div>
@@ -44,15 +68,21 @@ const LandingLayout = ({ children }) => {
             <div className="hidden md:flex md:space-x-10">
               <a href="#" className="font-medium text-gray-500 hover:text-gray-900 transition duration-150 ease-in-out">Product</a>
               <a href="#" className="font-medium text-gray-500 hover:text-gray-900 transition duration-150 ease-in-out">Features</a>
-              <a href="#" className="font-medium text-gray-500 hover:text-gray-900 transition duration-150 ease-in-out">Marketplace</a>
-              <a href="#" className="font-medium text-gray-500 hover:text-gray-900 transition duration-150 ease-in-out">Company</a>
             </div>
             <div className="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">
               <span className="inline-flex rounded-md shadow">
-                <a href="#" className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-indigo-600 bg-white hover:text-indigo-500 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-gray-50 active:text-indigo-700 transition duration-150 ease-in-out">
-                  Log in
+                <a onClick={handleLoginClick} href="#" className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-indigo-600 bg-white hover:text-indigo-500 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-gray-50 active:text-indigo-700 transition duration-150 ease-in-out">
+                  {isAuthenticated ? "Log Out" : "Log In"}
                 </a>
               </span>
+              <UserAuthTools />
+              {isAuthenticated ? (
+                <span className="inline-flex rounded-md shadow ml-4">
+                  <Link to={routes.plan()} className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-indigo-600 bg-gray-100 hover:text-indigo-500 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-gray-50 active:text-indigo-700 transition duration-150 ease-in-out">
+                    Dashboard &rarr;
+                  </Link>
+                </span>
+              ) : ""}
             </div>
           </nav>
         </div>
@@ -67,7 +97,7 @@ const LandingLayout = ({ children }) => {
         From: "opacity-100 scale-100"
         To: "opacity-0 scale-95"
     --> */}
-        <div className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
+        <div className={`${mobileOpen ? "absolute" : "hidden"} top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden`}>
           <div className="rounded-lg shadow-md">
             <div className="rounded-lg bg-white shadow-xs overflow-hidden" role="menu" aria-orientation="vertical" aria-labelledby="main-menu">
               <div className="px-5 pt-4 flex items-center justify-between">
@@ -75,9 +105,9 @@ const LandingLayout = ({ children }) => {
                   <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-on-white.svg" alt="" />
                 </div>
                 <div className="-mr-2">
-                  <button type="button" className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Close menu">
+                  <button onClick={() => setMobileOpen(!mobileOpen)} type="button" className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Close menu">
                     <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
                 </div>
@@ -89,9 +119,9 @@ const LandingLayout = ({ children }) => {
                 <a href="#" className="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition duration-150 ease-in-out" role="menuitem">Company</a>
               </div>
               <div>
-                <a href="#" className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100 hover:text-indigo-700 focus:outline-none focus:bg-gray-100 focus:text-indigo-700 transition duration-150 ease-in-out" role="menuitem">
-                  Log in
-            </a>
+                <a onClick={handleLoginClick} href="#" className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100 hover:text-indigo-700 focus:outline-none focus:bg-gray-100 focus:text-indigo-700 transition duration-150 ease-in-out" role="menuitem">
+                  {isAuthenticated ? "Log Out" : "Log In"}
+                </a>
               </div>
             </div>
           </div>
@@ -100,13 +130,16 @@ const LandingLayout = ({ children }) => {
         <main className="mt-10 mx-auto max-w-screen-xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 xl:mt-28">
           <div className="text-center">
             <h2 className="text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:text-5xl sm:leading-none md:text-6xl">
-              Data to enrich your
-          <br className="xl:hidden" />
-              <span className="text-indigo-600">online business</span>
+              Save time and money
+              <span className="text-indigo-600">
+                <span className="hidden xl:inline-block">&nbsp;with</span>
+                &nbsp;Bee Lion
+                </span>
             </h2>
             <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.
-        </p>
+              Let's face it, you waste time and money on groceries. The stores are layed out so you have to go down every aisle to find what you want.
+              <br />Why not save time and money by planning your route?
+            </p>
             <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
               <div className="rounded-md shadow">
                 <a href="#" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10">
@@ -126,44 +159,39 @@ const LandingLayout = ({ children }) => {
 
       {/* Start of Features */}
 
-      <div class="py-12 bg-white">
-        <div class="max-w-xl mx-auto px-4 sm:px-6 lg:max-w-screen-xl lg:px-8">
-          <div class="lg:grid lg:grid-cols-3 lg:gap-8">
+      <div className="relative py-12 bg-white">
+        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:max-w-screen-xl lg:px-8">
+          <div className="lg:grid lg:grid-cols-3 lg:gap-8">
             <div>
-              <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                </svg>
+              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                <svg className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor" className="clipboard-list w-6 h-6"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"></path></svg>
               </div>
-              <div class="mt-5">
-                <h5 class="text-lg leading-6 font-medium text-gray-900">Competitive exchange rates</h5>
-                <p class="mt-2 text-base leading-6 text-gray-500">
+              <div className="mt-5">
+                <h5 className="text-lg leading-6 font-medium text-gray-900">Organize your list</h5>
+                <p className="mt-2 text-base leading-6 text-gray-500">
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.
           </p>
               </div>
             </div>
-            <div class="mt-10 lg:mt-0">
-              <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-                </svg>
+            <div className="mt-10 lg:mt-0">
+              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                <svg className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor" className="currency-dollar w-6 h-6"><path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"></path><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clipRule="evenodd"></path></svg>
               </div>
-              <div class="mt-5">
-                <h5 class="text-lg leading-6 font-medium text-gray-900">No hidden fees</h5>
-                <p class="mt-2 text-base leading-6 text-gray-500">
+              <div className="mt-5">
+                <h5 className="text-lg leading-6 font-medium text-gray-900">Save money shopping</h5>
+                <p className="mt-2 text-base leading-6 text-gray-500">
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.
                 </p>
               </div>
             </div>
-            <div class="mt-10 lg:mt-0">
-              <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+            <div className="mt-10 lg:mt-0">
+              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                <svg className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"></path></svg>
               </div>
-              <div class="mt-5">
-                <h5 class="text-lg leading-6 font-medium text-gray-900">Transfers are instant</h5>
-                <p class="mt-2 text-base leading-6 text-gray-500">
+              <div className="mt-5">
+                <h5 className="text-lg leading-6 font-medium text-gray-900">Save time at the store</h5>
+                <p className="mt-2 text-base leading-6 text-gray-500">
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.
                 </p>
               </div>

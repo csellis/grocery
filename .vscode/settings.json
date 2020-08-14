@@ -14,20 +14,20 @@
     "**/.hg/store/**": true
   },
   "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#664d46",
-    "activityBar.activeBorder": "#1a261d",
-    "activityBar.background": "#664d46",
+    "activityBar.activeBackground": "#2385f2",
+    "activityBar.activeBorder": "#96094c",
+    "activityBar.background": "#2385f2",
     "activityBar.foreground": "#e7e7e7",
     "activityBar.inactiveForeground": "#e7e7e799",
-    "activityBarBadge.background": "#1a261d",
+    "activityBarBadge.background": "#96094c",
     "activityBarBadge.foreground": "#e7e7e7",
-    "statusBar.background": "#483631",
+    "statusBar.background": "#0d6cd5",
     "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#664d46",
-    "titleBar.activeBackground": "#483631",
+    "statusBarItem.hoverBackground": "#2385f2",
+    "titleBar.activeBackground": "#0d6cd5",
     "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.inactiveBackground": "#48363199",
+    "titleBar.inactiveBackground": "#0d6cd599",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#483631"
+  "peacock.color": "#0d6cd5"
 }
