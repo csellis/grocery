@@ -1,5 +1,6 @@
 import { db } from 'src/lib/db'
 import { requireAuth, getUserServer } from "src/lib/auth";
+import { category } from '../categories/categories';
 
 export const items = () => {
   return db.item.findMany()
@@ -21,17 +22,22 @@ export const itemsByName = ({ name }) => {
   })
 }
 
-// Category ID 16 === Uncategorized
-const uncategorizedId = { id: 16 }
+// fetch uncategorized category
+const uncategorizedQuery = { where: { name: "Uncategorized" } }
+const uncategorized = db.category.findOne(uncategorizedQuery);
 
 export const createItem = async ({ input }) => {
   requireAuth()
-  console.log('Hellow Orld')
+  // console.log('Hellow Orld')
+  // fetch uncategorized category
+  const uncategorizedQuery = { where: { name: "Uncategorized" } }
+  const uncategorized = await db.category.findMany(uncategorizedQuery)[0];
+
   return await db.item.create({
     data: {
       name: input.name,
       category: {
-        connect: uncategorizedId
+        connect: uncategorized.id
       }
     },
   })
@@ -40,6 +46,10 @@ export const createItem = async ({ input }) => {
 export const createItemAndUserItem = async ({ input }) => {
   requireAuth();
   const { name } = input;
+  // fetch uncategorized category
+  const uncategorizedQuery = { where: { name: "Uncategorized" } }
+  const uncategorized = await db.category.findMany(uncategorizedQuery);
+  const unCat = uncategorized[0]
   // Check if item exists
   const itemExists = await db.item.findMany({
     where: {
@@ -49,17 +59,15 @@ export const createItemAndUserItem = async ({ input }) => {
     },
   })
   // console.log(itemExists)
+
   // Create item if it doesn't exist
   if (itemExists.length === 0) {
-    const uncategorized = await db.category.findOne({
-      where: uncategorizedId
-    });
 
     const item = await db.item.create({
       data: {
         name,
         category: {
-          connect: uncategorizedId
+          connect: { id: unCat.id }
         }
       }
     });
@@ -71,8 +79,8 @@ export const createItemAndUserItem = async ({ input }) => {
       data: {
         itemName: item.name,
         itemId: item.id,
-        categoryName: uncategorized.name,
-        categoryId: uncategorized.id,
+        categoryName: unCat.name,
+        categoryId: unCat.id,
         picked: false,
         user: {
           connect: { id: currentUser.id }

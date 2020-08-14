@@ -15,8 +15,8 @@ import { db } from './db'
 // optionally raise an error if they're not.
 
 export const requireAuth = () => {
-  console.log('Issued from requireAuth()')
-  console.log(context)
+  // console.log('Issued from requireAuth()')
+  // console.log(context)
   if (!context.currentUser) {
     throw new AuthenticationError("You don't have permission to do that.")
   }
