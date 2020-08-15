@@ -8,6 +8,8 @@ const ApplicationLayout = ({ children }) => {
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
+  // const colors = useContext(ColorContext);
+
 
   const handleToggleSidebar = () => {
     setMenuOpen(!menuOpen);
