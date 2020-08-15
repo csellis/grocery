@@ -17,22 +17,10 @@ const ApplicationLayout = ({ children }) => {
     setProfileOpen(!profileOpen);
   }
 
-  const authObject = {
-    domain: process.env.AUTH0_DOMAIN,
-    client_id: process.env.AUTH0_CLIENT_ID,
-    redirect_uri: process.env.AUTH0_REDIRECT_URI,
-    // ** NOTE ** Storing tokens in browser local storage provides persistence across page refreshes and browser tabs.
-    // However, if an attacker can achieve running JavaScript in the SPA using a cross-site scripting (XSS) attack,
-    // they can retrieve the tokens stored in local storage.
-    // https://auth0.com/docs/libraries/auth0-spa-js#change-storage-options
-    cacheLocation: 'localstorage',
-    audience: process.env.AUTH0_AUDIENCE,
-  }
 
 
   return (
     <div className="h-screen flex overflow-hidden bg-gray-100">
-      {JSON.stringify(authObject)}
 
       {/* <!-- Off-canvas menu for mobile --> */}
       <div className="md:hidden">
