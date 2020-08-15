@@ -22,15 +22,15 @@ const LandingLayout = ({ children }) => {
   }
 
   const authObject = {
-    domain: process.env.AUTH0_DOMAIN,
-    client_id: process.env.AUTH0_CLIENT_ID,
-    redirect_uri: process.env.AUTH0_REDIRECT_URI,
+    domain: process.env.NEXT_PUBLIC_AUTH0_DOMAIN,
+    client_id: process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID,
+    redirect_uri: process.env.NEXT_PUBLIC_AUTH0_REDIRECT_URI,
     // ** NOTE ** Storing tokens in browser local storage provides persistence across page refreshes and browser tabs.
     // However, if an attacker can achieve running JavaScript in the SPA using a cross-site scripting (XSS) attack,
     // they can retrieve the tokens stored in local storage.
     // https://auth0.com/docs/libraries/auth0-spa-js#change-storage-options
     cacheLocation: 'localstorage',
-    audience: process.env.AUTH0_AUDIENCE,
+    audience: process.env.NEXT_PUBLIC_AUTH0_AUDIENCE,
   }
 
 
