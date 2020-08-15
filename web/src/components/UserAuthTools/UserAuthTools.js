@@ -12,7 +12,7 @@ const UserAuthTools = () => {
     <button
       onClick={async () => {
         if (isAuthenticated) {
-          await logOut({ returnTo: process.env.AUTH0_REDIRECT_URI })
+          await logOut({ returnTo: process.env.NEXT_PUBLIC_AUTH0_REDIRECT_URI })
         } else {
           const searchParams = new URLSearchParams(window.location.search)
           await logIn({
