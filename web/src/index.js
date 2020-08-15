@@ -1,6 +1,5 @@
 import { Auth0Client } from '@auth0/auth0-spa-js'
 import { AuthProvider } from '@redwoodjs/auth'
-import netlifyIdentity from 'netlify-identity-widget'
 import ReactDOM from 'react-dom'
 import { RedwoodProvider, FatalErrorBoundary } from '@redwoodjs/web'
 import FatalErrorPage from 'src/pages/FatalErrorPage'
@@ -9,8 +8,6 @@ import Routes from 'src/Routes'
 
 import './scaffold.css'
 import './index.css'
-
-// netlifyIdentity.init()
 
 const auth0 = new Auth0Client({
   domain: process.env.AUTH0_DOMAIN,
@@ -23,6 +20,7 @@ const auth0 = new Auth0Client({
   cacheLocation: 'localstorage',
   audience: process.env.AUTH0_AUDIENCE,
 })
+
 
 ReactDOM.render(
   <FatalErrorBoundary page={FatalErrorPage}>

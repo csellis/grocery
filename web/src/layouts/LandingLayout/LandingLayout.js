@@ -20,11 +20,12 @@ const LandingLayout = ({ children }) => {
       navigate('/plan')
     }
   }
-  console.log(`Is authenticated: ${isAuthenticated}`)
+
 
 
   return (
     <div className="relative bg-gray-50 overflow-hidden">
+
 
       {/* Start of Hero */}
       <div className="hidden md:block md:absolute md:inset-y-0 md:h-full md:w-full">
