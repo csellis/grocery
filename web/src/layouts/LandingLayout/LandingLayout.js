@@ -36,8 +36,6 @@ const LandingLayout = ({ children }) => {
   return (
     <div className="relative bg-gray-50 overflow-hidden">
 
-      {JSON.stringify(authObject)}
-
       {/* Start of Hero */}
       <div className="hidden md:block md:absolute md:inset-y-0 md:h-full md:w-full">
         <div className="relative h-full max-w-screen-xl mx-auto">
