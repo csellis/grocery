@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink, Link, routes } from '@redwoodjs/router'
 import { useAuth } from "@redwoodjs/auth";
 import SearchBar from "src/components/SearchBar/SearchBar";
+import Transition from "src/components/Transition/transition";
 
 const ApplicationLayout = ({ children }) => {
   const { logIn, logOut, isAuthenticated, currentUser } = useAuth();
@@ -19,28 +20,27 @@ const ApplicationLayout = ({ children }) => {
     setProfileOpen(!profileOpen);
   }
 
-
-
+  console.log(menuOpen)
   return (
     <div className="h-screen flex overflow-hidden bg-gray-100">
-
       {/* <!-- Off-canvas menu for mobile --> */}
       <div className="md:hidden">
-        <div className={`${menuOpen ? 'fixed' : 'hidden'} inset-0 flex z-40`}>
-          {/* <!--
-        Off-canvas menu overlay, show/hide based on off-canvas menu state.
 
-        Entering: "transition-opacity easeLinear duration-300"
-          From: "opacity-0"
-          To: "opacity-100"
-        Leaving: "transition-opacity easeLinear duration-300"
-          From: "opacity-100"
-          To: "opacity-0"
-      --> */}
-          <div onClick={handleToggleSidebar} className="fixed inset-0">
-            <div className={`absolute inset-0 bg-gray-600 opacity-75`}></div>
+        <Transition
+          show={menuOpen}
+          enter="transition-opacity easeLinear duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity easeLinear duration-300"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0">
+            <div onClick={handleToggleSidebar} className="absolute inset-0 bg-gray-600 opacity-75"></div>
           </div>
-          {/* <!--
+        </Transition>
+      </div>
+      {/* <!--
         Off-canvas menu, show/hide based on off-canvas menu state.
 
         Entering: "transition ease-in-out duration-300 transform"
@@ -50,7 +50,17 @@ const ApplicationLayout = ({ children }) => {
           From: "translate-x-0"
           To: "-translate-x-full"
       --> */}
-          <div className={`${menuOpen ? 'relative' : 'hidden'} flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-indigo-800`}>
+      <Transition
+        show={menuOpen}
+        enter="transition ease-in-out duration-300 transform"
+        enterFrom="-translate-x-full"
+        enterTo="translate-x-0"
+        leave="transition ease-in-out duration-300 transform"
+        leaveFrom="translate-x-0"
+        leaveTo="-translate-x-full"
+      >
+        <>
+          <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-indigo-800">
             <div className="absolute top-0 right-0 -mr-14 p-1">
               <button onClick={handleToggleSidebar} className="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600" aria-label="Close sidebar">
                 <svg className="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -100,8 +110,9 @@ const ApplicationLayout = ({ children }) => {
           <div className="flex-shrink-0 w-14">
             {/* <!-- Dummy element to force sidebar to shrink to fit close icon --> */}
           </div>
-        </div>
-      </div>
+        </>
+      </Transition>
+
 
       {/* <!-- Static sidebar for desktop --> */}
       <div className="hidden md:flex md:flex-shrink-0">

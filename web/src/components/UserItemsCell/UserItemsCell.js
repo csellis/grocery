@@ -114,7 +114,7 @@ const UserItemsTable = ({ userItems, title, headerColor = "bg-gray-200", handleC
 
   return (
     <div className="-my-2 py-2 mt-4 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-      <div className="align-middle inline-block min-w-full shadow  sm:rounded-lg border-b border-gray-200">
+      <div className="align-middle inline-block min-w-full shadow sm:rounded-lg border-b border-gray-200">
         <table className="min-w-full">
           <tbody>
             {uniqueCategories.map(category => {
