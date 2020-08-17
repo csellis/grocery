@@ -90,7 +90,7 @@ export const deleteStore = async ({ id }) => {
       },
     },
   })
-  console.log(upd)
+  // console.log(upd)
   return db.store.delete({
     where: { id },
   })
