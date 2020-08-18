@@ -21,22 +21,9 @@ const LandingLayout = ({ children }) => {
     }
   }
 
-  const authObject = {
-    domain: process.env.AUTH0_DOMAIN,
-    client_id: process.env.AUTH0_CLIENT_ID,
-    redirect_uri: process.env.AUTH0_REDIRECT_URI,
-    // ** NOTE ** Storing tokens in browser local storage provides persistence across page refreshes and browser tabs.
-    // However, if an attacker can achieve running JavaScript in the SPA using a cross-site scripting (XSS) attack,
-    // they can retrieve the tokens stored in local storage.
-    // https://auth0.com/docs/libraries/auth0-spa-js#change-storage-options
-    cacheLocation: 'localstorage',
-    audience: process.env.AUTH0_AUDIENCE,
-  }
-
   return (
     <div className="relative bg-gray-50 overflow-hidden">
       {/* Start of Hero */}
-      {JSON.stringify(authObject)}
       <div className="hidden md:block md:absolute md:inset-y-0 md:h-full md:w-full">
         <div className="relative h-full max-w-screen-xl mx-auto">
           <svg className="absolute right-full transform translate-y-1/4 translate-x-1/4 lg:translate-x-1/2" width="404" height="784" fill="none" viewBox="0 0 404 784">

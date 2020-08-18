@@ -20,7 +20,7 @@ const ApplicationLayout = ({ children }) => {
     setProfileOpen(!profileOpen);
   }
 
-  console.log(menuOpen)
+  // console.log(menuOpen)
   return (
     <div className="h-screen flex overflow-hidden bg-gray-100">
       {/* <!-- Off-canvas menu for mobile --> */}

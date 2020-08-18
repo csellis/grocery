@@ -50,6 +50,7 @@ export const createItemAndUserItem = async ({ input }) => {
   const uncategorizedQuery = { where: { name: "Uncategorized" } }
   const uncategorized = await db.category.findMany(uncategorizedQuery);
   const unCat = uncategorized[0]
+  // console.log(unCat)
   // Check if item exists
   const itemExists = await db.item.findMany({
     where: {
@@ -74,7 +75,7 @@ export const createItemAndUserItem = async ({ input }) => {
     // Create userItem
     // Connect that with the user
     const currentUser = await getUserServer()
-    console.log(uncategorized)
+    // console.log(uncategorized)
     const userItem = await db.userItem.create({
       data: {
         itemName: item.name,
