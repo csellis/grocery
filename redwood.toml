@@ -10,6 +10,7 @@
 [web]
   port = 8910
   apiProxyPath = "/api"
+  includeEnvironmentVariables = ['AUTH0_AUDIENCE', 'AUTH0_REDIRECT_URI', 'AUTH0_CLIENT_ID', 'AUTH0_DOMAIN']
 [api]
   port = 8911
 [browser]
