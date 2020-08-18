@@ -36,6 +36,7 @@ const LandingLayout = ({ children }) => {
   return (
     <div className="relative bg-gray-50 overflow-hidden">
       {/* Start of Hero */}
+      {JSON.stringify(authObject)}
       <div className="hidden md:block md:absolute md:inset-y-0 md:h-full md:w-full">
         <div className="relative h-full max-w-screen-xl mx-auto">
           <svg className="absolute right-full transform translate-y-1/4 translate-x-1/4 lg:translate-x-1/2" width="404" height="784" fill="none" viewBox="0 0 404 784">
