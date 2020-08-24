@@ -1,16 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, Link, routes } from '@redwoodjs/router'
 import { useAuth } from "@redwoodjs/auth";
 import SearchBar from "src/components/SearchBar/SearchBar";
 import Transition from "src/components/Transition/transition";
 
 const ApplicationLayout = ({ children }) => {
-  const { logIn, logOut, isAuthenticated, currentUser } = useAuth();
+  const { logIn, logOut, isAuthenticated, currentUser, getUserMetadata, client } = useAuth();
+  useEffect(() => {
+    const getUser = async () => {
+      //const user = await client.getUserMetadata();
+      //console.log(user);
+    }
+    if (currentUser) {
+      getUser();
+    }
+  }, [currentUser])
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   // const colors = useContext(ColorContext);
 
+
+  console.log("Current user from Application Layout")
+  console.log(currentUser)
 
   const handleToggleSidebar = () => {
     setMenuOpen(!menuOpen);
@@ -20,9 +32,6 @@ const ApplicationLayout = ({ children }) => {
     setProfileOpen(!profileOpen);
   }
 
-  // console.log(currentUser)
-
-  // console.log(menuOpen)
   return (
     <div className="h-screen flex overflow-hidden bg-gray-100">
       {/* <!-- Off-canvas menu for mobile --> */}

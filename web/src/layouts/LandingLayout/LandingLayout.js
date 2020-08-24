@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, Link, routes, navigate } from '@redwoodjs/router'
 import { useAuth } from "@redwoodjs/auth";
 import Transition from "src/components/Transition/transition";
@@ -8,7 +8,7 @@ import UserAuthTools from 'src/components/UserAuthTools';
 const LandingLayout = ({ children }) => {
 
   const [mobileOpen, setMobileOpen] = useState(false)
-  const { logIn, logOut, isAuthenticated, currentUser } = useAuth();
+  const { logIn, logOut, isAuthenticated, getCurrentUser } = useAuth();
 
 
   const handleLoginClick = async () => {

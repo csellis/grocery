@@ -28,23 +28,28 @@ export const getUserServer = async () => {
   return context.currentUser;
 }
 
-export const getCurrentUser = async (decoded, { type, token }) => {
-  // console.log(token)
+export const getCurrentUser = async (decoded, next) => {
+  console.log(next)
 
-  // Defined in auth0 Rules
-  const email = decoded["http://localhost:8910/email"]
-  if (!email) {
-    throw new AuthenticationError('Uh oh, no email')
-  }
-  let user = await db.user.findOne({ where: { email } })
-  if (!user) {
-    user = await db.user.create({ data: { email } })
-  }
+  return decoded;
+  // // console.log(token)
+  // console.log(decoded)
+  // // Defined in auth0 Rules
+  // const email = decoded["http://localhost:8910/email"]
+  // if (!email) {
+  //   throw new AuthenticationError('Uh oh, no email')
+  // }
+  // let user = await db.user.findOne({ where: { email } })
+  // if (!user) {
+  //   user = await db.user.create({ data: { email } })
+  // }
 
-  // fetch profile from auth0
-  // const userProfile = await fetchUserProfileByToken(token)
+  // user["bananas"] = 'a bunch'
 
-  return user
+  // // fetch profile from auth0
+  // // const userProfile = await fetchUserProfileByToken(token)
+
+  // return user
 }
 
 // export const createUser = async (name, email) => {
