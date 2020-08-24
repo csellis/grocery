@@ -17,10 +17,10 @@
 //   }
 // }
 
-module.exports = (req, res) => {
-  res.json({
-    body: req.body,
-    query: req.query,
-    cookies: req.cookies,
-  })
+export const handler = async (event, context) => {
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'application/json ' },
+    body: JSON.stringify({ event, context }),
+  }
 }
