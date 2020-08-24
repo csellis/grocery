@@ -8,11 +8,11 @@
 //   }
 // }
 
-module.exports = (req, res) => {
-  console.log("Sent")
-  res.json({
-    body: req.body,
-    query: req.query,
-    cookies: req.cookies,
-  })
+
+
+export const handler = async (event, _context) => {
+  return {
+    statusCode: 201,
+    body: JSON.stringify(`signIn`),
+  }
 }
