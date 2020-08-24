@@ -6,6 +6,8 @@
 //   }
 import { context } from '@redwoodjs/api'
 import { AuthenticationError } from '@redwoodjs/api'
+
+import { fetchUserProfileByToken } from "src/services/userManagers/userManagers";
 import { db } from './db'
 // export const getCurrentUser = async (decoded, { token, type }) => {
 //   return decoded
@@ -27,7 +29,8 @@ export const getUserServer = async () => {
 }
 
 export const getCurrentUser = async (decoded, { type, token }) => {
-  // console.log(decoded)
+  // console.log(token)
+
   // Defined in auth0 Rules
   const email = decoded["http://localhost:8910/email"]
   if (!email) {
@@ -37,11 +40,15 @@ export const getCurrentUser = async (decoded, { type, token }) => {
   if (!user) {
     user = await db.user.create({ data: { email } })
   }
+
+  // fetch profile from auth0
+  const userProfile = await fetchUserProfileByToken(token)
+
   return user
 }
 
-export const createUser = async (name, email) => {
-  return await db.user.create({
-    data: { name, email }
-  })
-}
+// export const createUser = async (name, email) => {
+//   return await db.user.create({
+//     data: { name, email }
+//   })
+// }

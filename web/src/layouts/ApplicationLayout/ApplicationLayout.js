@@ -20,6 +20,8 @@ const ApplicationLayout = ({ children }) => {
     setProfileOpen(!profileOpen);
   }
 
+  // console.log(currentUser)
+
   // console.log(menuOpen)
   return (
     <div className="h-screen flex overflow-hidden bg-gray-100">

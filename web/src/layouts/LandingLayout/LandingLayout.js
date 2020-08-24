@@ -21,6 +21,7 @@ const LandingLayout = ({ children }) => {
     }
   }
 
+
   return (
     <div className="relative bg-gray-50 overflow-hidden">
       {/* Start of Hero */}
@@ -120,6 +121,13 @@ const LandingLayout = ({ children }) => {
                   <a href="#" className="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition duration-150 ease-in-out" role="menuitem">Company</a>
                 </div>
                 <div>
+                  {isAuthenticated ? (
+                    <Link
+                      to={routes.plan()}
+                      className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100 hover:text-indigo-700 focus:outline-none focus:bg-gray-100 focus:text-indigo-700 transition duration-150 ease-in-out" role="menuitem">
+                      Dashboard &rarr;
+                    </Link>
+                  ) : null}
                   <a onClick={handleLoginClick} href="#" className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100 hover:text-indigo-700 focus:outline-none focus:bg-gray-100 focus:text-indigo-700 transition duration-150 ease-in-out" role="menuitem">
                     {isAuthenticated ? "Log Out" : "Log In"}
                   </a>
