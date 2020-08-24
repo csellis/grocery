@@ -42,7 +42,7 @@ export const getCurrentUser = async (decoded, { type, token }) => {
   }
 
   // fetch profile from auth0
-  const userProfile = await fetchUserProfileByToken(token)
+  // const userProfile = await fetchUserProfileByToken(token)
 
   return user
 }
