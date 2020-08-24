@@ -10,9 +10,9 @@
 
 
 
-export const handler = async (event, _context) => {
+export const handler = async (event, context) => {
   return {
     statusCode: 201,
-    body: JSON.stringify(`signIn`),
+    body: JSON.stringify(event),
   }
 }
