@@ -1,5 +1,5 @@
 <h1 align="center">
-# 🛒 Beelion: a smart Grocery List App
+🛒 Beelion: a smart Grocery List App
 </h1>
 
 ## [Beelion RedwoodJS][blrw]
