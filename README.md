@@ -1,4 +1,8 @@
+<h1 align="center">
 # 🛒 Beelion: a smart Grocery List App
+</h1>
+
+## [Beelion RedwoodJS][blrw]
 
 Have you ever forgotten something you needed from the grocery store? Have you ever forgotten something else?
 
@@ -27,6 +31,7 @@ yarn install
 yarn redwood dev
 ```
 
+[blrw]: https://grocery.vercel.app/
 [ytstream]: https://www.youtube.com/playlist?list=PLhL9OUB3wAf5zJCP93ygSOJJyhJRnS7zL
 [beelion]: https://beelionapp.com
 [meteor]: https://meteor.com
