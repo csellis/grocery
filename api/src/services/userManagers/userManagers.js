@@ -5,9 +5,10 @@ export const userManagers = () => {
   return db.userManager.findMany()
 }
 
+
 const auth0 = new AuthenticationClient({
   domain: process.env.AUTH0_DOMAIN,
-  clientId: process.env.AUTH0_CLIENT_ID,
+  clientId: process.env.AUTH0_CLIENT_ID
 })
 
 const management = new ManagementClient({
