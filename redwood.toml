@@ -9,9 +9,10 @@
 
 [web]
   port = 8910
-  apiProxyPath = "/api"
+  apiProxyPath = "/.netlify/functions"
   includeEnvironmentVariables = ['AUTH0_AUDIENCE', 'AUTH0_REDIRECT_URI', 'AUTH0_CLIENT_ID', 'AUTH0_DOMAIN', 'REDWOOD_ENV_AUTH0_AUDIENCE', 'REDWOOD_ENV_AUTH0_REDIRECT_URI', 'REDWOOD_ENV_AUTH0_CLIENT_ID', 'REDWOOD_ENV_AUTH0_DOMAIN', 'AUTH0_MANAGEMENT_CLIENT_SECRET', 'AUTH0_MANAGEMENT_ClIENT_ID']
 [api]
   port = 8911
+  schemaPath = "./api/db/schema.prisma"
 [browser]
   open = true

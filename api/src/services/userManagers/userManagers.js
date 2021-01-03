@@ -5,9 +5,11 @@ export const userManagers = () => {
   return db.userManager.findMany()
 }
 
+
+
 const auth0 = new AuthenticationClient({
   domain: process.env.AUTH0_DOMAIN,
-  clientId: process.env.AUTH0_CLIENT_ID,
+  clientId: process.env.AUTH0_CLIENT_ID
 })
 
 const management = new ManagementClient({
@@ -16,6 +18,8 @@ const management = new ManagementClient({
   clientSecret: process.env.AUTH0_MANAGEMENT_CLIENT_SECRET,
   scope: 'read:users update:users',
 })
+
+
 
 export const fetchUserProfileByToken = async (token) => {
   try {
