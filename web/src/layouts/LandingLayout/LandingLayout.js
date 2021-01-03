@@ -15,11 +15,13 @@ const LandingLayout = ({ children }) => {
 
     console.log({ isAuthenticated })
     if (isAuthenticated) {
-      await logOut()
-      navigate('/')
+      await logOut({ returnTo: process.env.AUTH0_REDIRECT_URI })
+      // navigate('/')
     } else {
-      await logIn()
-      navigate('/plan')
+      const searchParams = new URLSearchParams(window.location.search)
+      await logIn({
+        appState: { targetUrl: searchParams.get('redirectTo') },
+      })
     }
   }
 
