@@ -74,7 +74,7 @@
   dependencies:
     xss "^1.0.6"
 
-"@auth0/auth0-spa-js@^1.11.0":
+"@auth0/auth0-spa-js@^1.13.5":
   version "1.13.5"
   resolved "https://registry.yarnpkg.com/@auth0/auth0-spa-js/-/auth0-spa-js-1.13.5.tgz#443ced4db57453eaf36d84c75d736d960902b5ad"
   integrity sha512-wHdQf5NU1u/ZL6+vK8zrT3PV/7J7SFVQVHeQ8yrJJyaVsqMEHtr/lD9PLnhZTxPjRxo5wb3d+CO3jb2GTVNRKQ==
@@ -1720,10 +1720,10 @@
     lodash.omitby "^4.6.0"
     merge-graphql-schemas "^1.7.6"
 
-"@redwoodjs/auth@^0.15.4-canary.21":
-  version "0.15.4-canary.25"
-  resolved "https://registry.yarnpkg.com/@redwoodjs/auth/-/auth-0.15.4-canary.25.tgz#3772316ce13ec345fd87c092331c5bca91caab42"
-  integrity sha512-GvK/4+a8pim6vPOpa4cSl4UpNYavieXq/9lrzjRQQVuRiZs95oLZb9f3G5IUp4KthyMIf21Q7/yySvWwhJ8sgw==
+"@redwoodjs/auth@^0.21.0":
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/@redwoodjs/auth/-/auth-0.21.0.tgz#967deef0d0421ea9f6bc205857ad9265d2f5df55"
+  integrity sha512-o3HuRTs79BqmnZX2zvK6+ffebxJE+T/nqwDDdOmCjXUitSsYbLSJkG4ffUuMtSWCFCxf/ytaFB245nS8Vin3XQ==
 
 "@redwoodjs/cli@^0.15.4-canary.25+588fa569":
   version "0.15.4-canary.25"

@@ -6,8 +6,8 @@
     "defaults"
   ],
   "dependencies": {
-    "@auth0/auth0-spa-js": "^1.11.0",
-    "@redwoodjs/auth": "^0.15.4-canary.21",
+    "@auth0/auth0-spa-js": "^1.13.5",
+    "@redwoodjs/auth": "^0.21.0",
     "@redwoodjs/forms": "^0.15.4-canary.21",
     "@redwoodjs/router": "^0.15.4-canary.21",
     "@redwoodjs/web": "^0.15.4-canary.21",

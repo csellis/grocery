@@ -12,6 +12,8 @@ const LandingLayout = ({ children }) => {
 
 
   const handleLoginClick = async () => {
+
+    console.log({ isAuthenticated })
     if (isAuthenticated) {
       await logOut()
       navigate('/')
