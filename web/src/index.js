@@ -22,6 +22,7 @@ const auth0 = new Auth0Client({
   audience: process.env.AUTH0_AUDIENCE,
 })
 
+
 ReactDOM.render(
   <FatalErrorBoundary page={FatalErrorPage}>
     <AuthProvider client={auth0} type="auth0">
