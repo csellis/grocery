@@ -10,11 +10,7 @@
   from = "/*"
   to = "/index.html"
   status = 200
-query {
-  items {
-    name
-  }
-}
+
 [[plugins]]
 package = 'netlify-plugin-prisma-provider'
   [plugins.inputs]
