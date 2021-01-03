@@ -52,7 +52,7 @@ const LandingLayout = ({ children }) => {
             <div className="flex items-center flex-1 md:absolute md:inset-y-0 md:left-0">
               <div className="flex items-center justify-between w-full md:w-auto">
                 <a href="#" aria-label="Home">
-                  <img className="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-on-white.svg" alt="Logo" />
+                  <img className="h-8 w-auto sm:h-10" src="./logo.svg" alt="Logo" />
                 </a>
                 <div className="-mr-2 flex items-center md:hidden">
                   <button onClick={() => setMobileOpen(!mobileOpen)} type="button" className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" id="main-menu" aria-label="Main menu" aria-haspopup="true">
