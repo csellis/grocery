@@ -14,4 +14,4 @@
 [[plugins]]
 package = 'netlify-plugin-prisma-provider'
   [plugins.inputs]
-  path = 'api/prisma/schema.prisma'
+  path = 'api/db/schema.prisma'
